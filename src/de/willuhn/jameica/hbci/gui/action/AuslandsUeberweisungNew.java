@@ -146,6 +146,9 @@ public class AuslandsUeberweisungNew implements Action
         u = i.getUeberweisung();
       }
 
+      if (u == null)
+        u = (AuslandsUeberweisung) Settings.getDBService().createObject(AuslandsUeberweisung.class,null);
+      
       // Bei neu angelegten Aufträgen per Default als Echtzeitüberweisung anlegen - nicht aber bei duplizierten Aufträgen
       if (u.isNewObject() && MetaKey.DUPLICATE_ID.get(u) == null)
         u.setInstantPayment(true);
