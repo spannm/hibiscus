@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV.SepaUtil;
 import org.kapott.hbci.GV.parsers.ISEPAParser;
 import org.kapott.hbci.sepa.SepaVersion;
@@ -32,6 +31,7 @@ import de.willuhn.jameica.hbci.rmi.SepaLastSequenceType;
 import de.willuhn.jameica.hbci.rmi.SepaLastType;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastBuchung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastschrift;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 
 /**
@@ -58,9 +58,9 @@ public class SepaSammelLastschriftImporter extends AbstractSepaImporter
       ueb.setType(SepaLastType.valueOf(prop.getProperty(ISEPAParser.Names.LAST_TYPE.getValue(),SepaLastType.CORE.name())));
       ueb.setBezeichnung(i18n.tr("{0} {1} vom {2}",ueb.getSequenceType().getDescription(),ueb.getType().getDescription(), HBCI.LONGDATEFORMAT.format(new Date())));
       ueb.setKonto(this.findKonto(prop.getProperty(ISEPAParser.Names.SRC_IBAN.getValue())));
-      ueb.setPmtInfId(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.PMTINFID.getValue())));
+      ueb.setPmtInfId(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.PMTINFID.getValue())));
       
-      String date = StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.TARGETDATE.getValue()));
+      String date = StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.TARGETDATE.getValue()));
       
       if (date != null && !SepaUtil.DATE_UNDEFINED.equals(date))
         ueb.setTargetDate(ISO_DATE.parse(date));
@@ -80,13 +80,13 @@ public class SepaSammelLastschriftImporter extends AbstractSepaImporter
     u.setGegenkontoBLZ(prop.getProperty(ISEPAParser.Names.DST_BIC.getValue()));
     u.setZweck(prop.getProperty(ISEPAParser.Names.USAGE.getValue()));
     u.setBetrag(this.parseValue(prop.getProperty(ISEPAParser.Names.VALUE.getValue())));
-    u.setEndtoEndId(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.ENDTOENDID.getValue())));
-    u.setPurposeCode(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.PURPOSECODE.getValue())));
+    u.setEndtoEndId(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.ENDTOENDID.getValue())));
+    u.setPurposeCode(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.PURPOSECODE.getValue())));
 
     u.setCreditorId(prop.getProperty(ISEPAParser.Names.CREDITORID.getValue()));
     u.setMandateId(prop.getProperty(ISEPAParser.Names.MANDATEID.getValue()));
     
-    String mandDate = StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.MANDDATEOFSIG.getValue()));
+    String mandDate = StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.MANDDATEOFSIG.getValue()));
     if (mandDate != null && !SepaUtil.DATE_UNDEFINED.equals(mandDate))
       u.setSignatureDate(ISO_DATE.parse(mandDate));
 

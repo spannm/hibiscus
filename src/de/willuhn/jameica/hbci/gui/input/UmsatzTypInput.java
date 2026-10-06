@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -27,6 +26,7 @@ import de.willuhn.jameica.hbci.Settings;
 import de.willuhn.jameica.hbci.rmi.UmsatzTyp;
 import de.willuhn.jameica.hbci.server.UmsatzTypBean;
 import de.willuhn.jameica.hbci.server.UmsatzTypUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.I18N;
@@ -146,7 +146,7 @@ public class UmsatzTypInput extends SelectInput
   @Override
   public void setComment(String comment)
   {
-    this.haveCustomComment = StringUtils.trimToNull(comment) != null;
+    this.haveCustomComment = StringUtil.isNotBlank(comment);
     this.haveAutoComment = this.haveComments && comment != null;
 
     if (!this.haveCustomComment && !this.haveAutoComment)
@@ -176,13 +176,13 @@ public class UmsatzTypInput extends SelectInput
       }
       
       String comment = ut.getKommentar();
-      if (StringUtils.trimToNull(comment) == null)
+      if (StringUtil.isBlank(comment))
       {
         super.setComment("");
         return;
       }
       
-      super.setComment(StringUtils.abbreviateMiddle(comment,"...",40));
+      super.setComment(StringUtil.abbreviateMiddle(comment,"...",40));
     }
     catch (Exception e)
     {

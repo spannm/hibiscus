@@ -13,7 +13,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.callback.HBCICallback;
 import org.kapott.hbci.manager.HBCIHandler;
 import org.kapott.hbci.manager.HBCIVersion;
@@ -42,6 +41,7 @@ import de.willuhn.jameica.hbci.passports.pintan.TanMediaDialog;
 import de.willuhn.jameica.hbci.passports.pintan.rmi.PinTanConfig;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.server.Converter;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.plugin.AbstractPlugin;
 import de.willuhn.jameica.system.Application;
@@ -171,7 +171,7 @@ public class PassportHandleImpl extends UnicastRemoteObject implements PassportH
       // BUGZILLA 831
       // Siehe auch Stefans Mail vom 10.03.2010 - Betreff "Re: [hbci4java] Speicherung des TAN-Verfahrens im PIN/TAN-Passport-File?"
       PtSecMech mech = config.getStoredSecMech();
-      String secmech = mech != null ? StringUtils.trimToNull(mech.getId()) : null;
+      String secmech = mech != null ? StringUtil.trimToNull(mech.getId()) : null;
 
       Logger.info("[PIN/TAN] using stored tan sec mech: " + (mech != null ? mech.toString() : "<ask-user>"));
       ((AbstractPinTanPassport)hbciPassport).setCurrentTANMethod(secmech);
@@ -425,7 +425,7 @@ public class PassportHandleImpl extends UnicastRemoteObject implements PassportH
         if (config != null)
         {
           PtSecMech mech = config.getStoredSecMech();
-          String type = mech != null ? StringUtils.trimToNull(mech.getId()) : null;
+          String type = mech != null ? StringUtil.trimToNull(mech.getId()) : null;
           if (type != null)
           {
             // Wir checken vorher noch, ob es das TAN-Verfahren ueberhaupt noch gibt

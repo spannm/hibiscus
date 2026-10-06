@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.speedbanking.bankdata.BankData;
 import de.speedbanking.bankdata.BankDataLookup;
 import de.willuhn.jameica.gui.Action;
@@ -24,6 +22,7 @@ import de.willuhn.jameica.hbci.HBCIProperties;
 import de.willuhn.jameica.hbci.IbanCommonsProperties;
 import de.willuhn.jameica.hbci.messaging.ObjectChangedMessage;
 import de.willuhn.jameica.hbci.rmi.HibiscusAddress;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
@@ -81,11 +80,11 @@ public class SepaConvertAddress implements Action
     {
       try
       {
-        String blz  = StringUtils.trimToNull(a.getBlz());
-        String bic  = StringUtils.trimToNull(a.getBic());
+        String blz  = StringUtil.trimToNull(a.getBlz());
+        String bic  = StringUtil.trimToNull(a.getBic());
         
-        String kto  = StringUtils.trimToNull(a.getKontonummer());
-        String iban = StringUtils.trimToNull(a.getIban());
+        String kto  = StringUtil.trimToNull(a.getKontonummer());
+        String iban = StringUtil.trimToNull(a.getIban());
 
         // hat schon IBAN/BIC
         if (bic != null && iban != null)

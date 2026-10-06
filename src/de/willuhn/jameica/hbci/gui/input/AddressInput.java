@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -36,6 +35,7 @@ import de.willuhn.jameica.hbci.gui.dialogs.AdresseAuswahlDialog;
 import de.willuhn.jameica.hbci.gui.filter.AddressFilter;
 import de.willuhn.jameica.hbci.rmi.Address;
 import de.willuhn.jameica.hbci.rmi.AddressbookService;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
@@ -406,7 +406,7 @@ public class AddressInput implements Input
           String iban = a.getIban();
           if (iban != null && iban.length() > 0)
           {
-            sb.append(" - IBAN " + StringUtils.abbreviateMiddle(iban,"...",10));
+            sb.append(" - IBAN " + StringUtil.abbreviateMiddle(iban,"...",10));
           }
         }
         

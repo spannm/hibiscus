@@ -17,8 +17,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.annotation.Lifecycle;
 import de.willuhn.annotation.Lifecycle.Type;
 import de.willuhn.jameica.hbci.rmi.Konto;
@@ -27,6 +25,7 @@ import de.willuhn.jameica.hbci.synchronize.SynchronizeBackend;
 import de.willuhn.jameica.hbci.synchronize.SynchronizeEngine;
 import de.willuhn.jameica.hbci.synchronize.SynchronizeSession;
 import de.willuhn.jameica.hbci.synchronize.jobs.SynchronizeJob;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.QueryMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
@@ -284,7 +283,7 @@ public class ScriptingSynchronizeBackend extends AbstractSynchronizeBackend<Scri
           this.checkInterrupted();
 
           String function = (String) job.getContext(CTX_JS_FUNCTION);
-          if (StringUtils.isEmpty(function))
+          if (StringUtil.isEmpty(function))
             throw new ApplicationException(i18n.tr("Kein gültiger Scripting-Auftrag: {0}",job.getName()));
           
           Logger.info("executing javascript function " + function);

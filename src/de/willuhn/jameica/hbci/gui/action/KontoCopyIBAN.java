@@ -10,9 +10,8 @@
 
 package de.willuhn.jameica.hbci.gui.action;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.rmi.Konto;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
@@ -37,7 +36,7 @@ public class KontoCopyIBAN extends CopyClipboard
     
     try
     {
-      super.handleAction(StringUtils.deleteWhitespace(k.getIban()));
+      super.handleAction(StringUtil.deleteWhitespace(k.getIban()));
     }
     catch (Exception e)
     {

@@ -12,8 +12,6 @@ package de.willuhn.jameica.hbci.gui.views;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.gui.AbstractView;
 import de.willuhn.jameica.gui.GUI;
 import de.willuhn.jameica.gui.input.MultiInput;
@@ -24,6 +22,7 @@ import de.willuhn.jameica.hbci.gui.controller.UmsatzDetailControl;
 import de.willuhn.jameica.hbci.messaging.NeueUmsaetze;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.util.I18N;
 
@@ -72,7 +71,7 @@ public abstract class AbstractUmsatzDetail extends AbstractView
     left.addLabelPair(i18n.tr("Name"),                       control.getEmpfaengerName());
 
     // Name 2 erstmal nur anzeigen, wenn was drin steht
-    if (StringUtils.isNotBlank(control.getUmsatz().getGegenkontoName2()))
+    if (StringUtil.isNotBlank(control.getUmsatz().getGegenkontoName2()))
       left.addInput(control.getEmpfaengerName2());
     
     left.addInput(control.getEmpfaengerKonto());

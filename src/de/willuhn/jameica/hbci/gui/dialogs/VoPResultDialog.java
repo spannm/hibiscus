@@ -15,7 +15,6 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -53,6 +52,7 @@ import de.willuhn.jameica.hbci.rmi.SepaSammelTransferBuchung;
 import de.willuhn.jameica.hbci.rmi.Transfer;
 import de.willuhn.jameica.hbci.server.AbstractHibiscusTransferImpl;
 import de.willuhn.jameica.hbci.server.AbstractSepaSammelTransferImpl;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.QueryMessage;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
@@ -300,8 +300,8 @@ public class VoPResultDialog extends AbstractDialog<Boolean>
       if (name == null || name.isBlank())
         return false;
       
-      final String iban1 = StringUtils.trimToNull(t.getGegenkontoNummer());
-      final String iban2 = StringUtils.trimToNull(i.getIban());
+      final String iban1 = StringUtil.trimToNull(t.getGegenkontoNummer());
+      final String iban2 = StringUtil.trimToNull(i.getIban());
 
       final double d1 = t.getBetrag();
       final BigDecimal d2 = i.getAmount();

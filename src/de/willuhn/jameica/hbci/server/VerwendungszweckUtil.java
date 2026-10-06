@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.HBCIProperties;
 import de.willuhn.jameica.hbci.rmi.HibiscusTransfer;
@@ -28,6 +26,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.SammelTransfer;
 import de.willuhn.jameica.hbci.rmi.SammelTransferBuchung;
 import de.willuhn.jameica.hbci.rmi.Transfer;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -183,7 +182,7 @@ public class VerwendungszweckUtil
     // Sprich: Das Tag ist zwar da, aber leer. Macht die "S-Bahn Berlin GmbH".
     // In dem Fall liefern wir ebenfalls den kompletten Text
     String value = result.get(tag);
-    if (tag == Tag.SVWZ && StringUtils.trimToNull(value) == null)
+    if (tag == Tag.SVWZ && StringUtil.isBlank(value))
       return toString(t);
     
     return value;
@@ -221,7 +220,7 @@ public class VerwendungszweckUtil
     
     // Jetzt schauen wir, ob wir den Verwendungszweck per ":" noch weiter zerlegen koennen
     String svwz = result.get(Tag.SVWZ);
-    if (StringUtils.trimToNull(svwz) != null)
+    if (StringUtil.isNotBlank(svwz))
       result.putAll(parse(':',svwz));
     
     return result;
@@ -270,7 +269,7 @@ public class VerwendungszweckUtil
           if (next == -1)
           {
             // Kein weiteres Tag mehr da. Gehoert alles zum Tag.
-            result.put(tag,StringUtils.trimToEmpty(line.substring(start + tagLen).replace("\n","")));
+            result.put(tag,StringUtil.trimToEmpty(line.substring(start + tagLen).replace("\n","")));
             break;
           }
           else
@@ -287,7 +286,7 @@ public class VerwendungszweckUtil
             // Ist ein bekanntes Tag. Also uebernehmen wir den Text genau bis dahin
             if (found != null)
             {
-              result.put(tag,StringUtils.trimToEmpty(line.substring(start + tagLen,next - found.name().length()).replace("\n","")));
+              result.put(tag,StringUtil.trimToEmpty(line.substring(start + tagLen,next - found.name().length()).replace("\n","")));
               break;
             }
           }
@@ -301,27 +300,27 @@ public class VerwendungszweckUtil
       // Wenn wir Tags haben, SVWZ aber fehlt, nehmen wir als SVWZ den Text bis zum ersten Tag
       if (result.size() > 0 && !result.containsKey(Tag.SVWZ) && first > 0)
       {
-        result.put(Tag.SVWZ,StringUtils.trimToEmpty(line.substring(0,first).replace("\n","")));
+        result.put(Tag.SVWZ,StringUtil.trimToEmpty(line.substring(0,first).replace("\n","")));
       }
       
       // Sonderrolle IBAN. Wir entfernen alles bis zum ersten Leerzeichen. Siehe "testParse012". Da hinter der
       // IBAN kein vernuenftiges Tag mehr kommt, wuerde sonst der ganze Rest da mit reinfallen. Aber nur, wenn
       // es erst nach 22 Zeichen kommt. Sonst steht es mitten in der IBAN drin. In dem Fall entfernen wir die
       // Leerzeichen aus der IBAN (siehe "testParse013")
-      String iban = StringUtils.trimToNull(result.get(Tag.IBAN));
+      String iban = StringUtil.trimToNull(result.get(Tag.IBAN));
       if (iban != null)
       {
         int space = iban.indexOf(" ");
         if (space > 21) // Wir beginnen ja bei 0 mit dem Zaehlen
-          result.put(Tag.IBAN,StringUtils.trimToEmpty(iban.substring(0,space)));
+          result.put(Tag.IBAN,StringUtil.trimToEmpty(iban.substring(0,space)));
         else if (space != -1)
-          result.put(Tag.IBAN,StringUtils.deleteWhitespace(iban));
+          result.put(Tag.IBAN,StringUtil.deleteWhitespace(iban));
       }
       
       // testParse013: Leerzeichen aus der BIC entfernen
-      String bic = StringUtils.trimToNull(result.get(Tag.BIC));
+      String bic = StringUtil.trimToNull(result.get(Tag.BIC));
       if (bic != null)
-        result.put(Tag.BIC,StringUtils.deleteWhitespace(bic));
+        result.put(Tag.BIC,StringUtil.deleteWhitespace(bic));
         
     }
     catch (Exception e)
@@ -363,7 +362,7 @@ public class VerwendungszweckUtil
     List<String> l = clean(true,lines);
     
     // Wir werfen alles in einen String und verteilen es dann ohne weitere Trennungen auf die Zeilen
-    String all = StringUtils.join(l,"");
+    String all = String.join("",l);
 
     // 1. Passt alles in Zeile 1?
     if (all.length() <= 255)

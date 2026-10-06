@@ -19,8 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.util.DateParser.DatePattern.Flag;
 import de.willuhn.logging.Logger;
 
@@ -110,7 +108,7 @@ public class DateParser
    */
   public static Date parse(String date)
   {
-    date = StringUtils.trimToNull(date);
+    date = StringUtil.trimToNull(date);
     
     if (date == null)
       return null;
@@ -144,7 +142,7 @@ public class DateParser
         String toParse = date;
         
         if (dp.hasFlag(Flag.NO_WHITESPACE))
-          toParse = StringUtils.deleteWhitespace(toParse);
+          toParse = StringUtil.deleteWhitespace(toParse);
         
         final Date d = internalParse(toParse,dp);
         

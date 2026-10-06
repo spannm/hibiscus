@@ -12,7 +12,6 @@ package de.willuhn.jameica.hbci.calendar;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.graphics.RGB;
 
 import de.willuhn.jameica.gui.util.Color;
@@ -22,6 +21,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.schedule.Schedule;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.logging.Logger;
 
 /**
@@ -59,7 +59,7 @@ public class UmsatzAppointmentProvider extends AbstractAppointmentProvider<Umsat
         double betrag = t.getBetrag();
         String rel    = i18n.tr(betrag >= 0.0d ? "von" : "an");
         String zweck  = VerwendungszweckUtil.toString(t,"\n");
-        String name   = StringUtils.trimToEmpty(t.getGegenkontoName());
+        String name   = StringUtil.trimToEmpty(t.getGegenkontoName());
 
         betrag = Math.abs(betrag);
         
@@ -82,12 +82,12 @@ public class UmsatzAppointmentProvider extends AbstractAppointmentProvider<Umsat
         double betrag = t.getBetrag();
         String name   = t.getGegenkontoName();
         String usage  = t.getZweck();
-        if (StringUtils.trimToNull(name) != null)
+        if (StringUtil.isNotBlank(name))
         {
           // Wenn wir einen Gegenkontonamen haben, nehmen wir den
           return i18n.tr("{0} {1} {2}",HBCI.DECIMALFORMAT.format(betrag),curr,name);
         }
-        else if (StringUtils.trimToNull(usage) != null)
+        else if (StringUtil.isNotBlank(usage))
         {
           // andernfalls den Verwendungszweck
           return i18n.tr("{0} {1} {2}",HBCI.DECIMALFORMAT.format(betrag),curr,usage);

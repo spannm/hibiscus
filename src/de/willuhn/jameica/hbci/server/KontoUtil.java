@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.datasource.rmi.DBIterator;
 import de.willuhn.datasource.rmi.DBService;
 import de.willuhn.datasource.rmi.ResultSetExtractor;
@@ -31,6 +29,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.BPDUtil.Query;
 import de.willuhn.jameica.hbci.server.BPDUtil.Support;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
 import de.willuhn.jameica.util.DateUtil;
@@ -152,7 +151,7 @@ public class KontoUtil
       
       // Also grundsaetzlich haben wir Support.
       // Jetzt checken, wir, was fuer das Konto konfiguriert ist.
-      String value = StringUtils.trimToNull(MetaKey.UMSATZ_CAMT.get(k));
+      String value = StringUtil.trimToNull(MetaKey.UMSATZ_CAMT.get(k));
       
       // Wenn ein Wert drin steht, hat sich der User entschieden, dann halten wir uns dran
       if (value != null)
@@ -256,7 +255,7 @@ public class KontoUtil
    */
   public static Konto findByIBAN(String iban, int flag) throws RemoteException
   {
-    iban = StringUtils.trimToNull(iban);
+    iban = StringUtil.trimToNull(iban);
     if (iban == null)
       return null;
     

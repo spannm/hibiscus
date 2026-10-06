@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV.SepaUtil;
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.sepa.SepaVersion.Type;
@@ -32,6 +31,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.SepaLastType;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastBuchung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastschrift;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
 import de.willuhn.util.ProgressMonitor;
@@ -81,7 +81,7 @@ public class SepaSammelLastschriftExporter extends AbstractSepaExporter
       if (type == null)
         type = SepaLastType.DEFAULT;
 
-      props.setProperty("pmtinfid",     StringUtils.trimToEmpty(u.getPmtInfId()));
+      props.setProperty("pmtinfid",     StringUtil.trimToEmpty(u.getPmtInfId()));
       props.setProperty("sequencetype", u.getSequenceType().name());
       props.setProperty("targetdate",   u.getTargetDate() != null ? ISO_DATE.format(u.getTargetDate()) : SepaUtil.DATE_UNDEFINED);
       props.setProperty("type",         type.name());
@@ -98,18 +98,18 @@ public class SepaSammelLastschriftExporter extends AbstractSepaExporter
     List<SepaSammelLastBuchung> buchungen = u.getBuchungen();
     for (SepaSammelLastBuchung b : buchungen)
     {
-      props.setProperty(SepaUtil.insertIndex("dst.bic",count),      StringUtils.trimToEmpty(b.getGegenkontoBLZ()));
-      props.setProperty(SepaUtil.insertIndex("dst.iban",count),     StringUtils.trimToEmpty(b.getGegenkontoNummer()));
-      props.setProperty(SepaUtil.insertIndex("dst.name",count),     StringUtils.trimToEmpty(b.getGegenkontoName()));
+      props.setProperty(SepaUtil.insertIndex("dst.bic",count),      StringUtil.trimToEmpty(b.getGegenkontoBLZ()));
+      props.setProperty(SepaUtil.insertIndex("dst.iban",count),     StringUtil.trimToEmpty(b.getGegenkontoNummer()));
+      props.setProperty(SepaUtil.insertIndex("dst.name",count),     StringUtil.trimToEmpty(b.getGegenkontoName()));
       props.setProperty(SepaUtil.insertIndex("btg.value",count),    HBCIUtils.value2String(b.getBetrag()));
       props.setProperty(SepaUtil.insertIndex("btg.curr",count),     k.getWaehrung() != null ? k.getWaehrung() : HBCIProperties.CURRENCY_DEFAULT_DE);
-      props.setProperty(SepaUtil.insertIndex("usage",count),        StringUtils.trimToEmpty(b.getZweck()));
-      props.setProperty(SepaUtil.insertIndex("endtoendid",count),   StringUtils.trimToEmpty(b.getEndtoEndId()));
+      props.setProperty(SepaUtil.insertIndex("usage",count),        StringUtil.trimToEmpty(b.getZweck()));
+      props.setProperty(SepaUtil.insertIndex("endtoendid",count),   StringUtil.trimToEmpty(b.getEndtoEndId()));
 
-      props.setProperty(SepaUtil.insertIndex("creditorid",count),   StringUtils.trimToEmpty(b.getCreditorId()));
-      props.setProperty(SepaUtil.insertIndex("mandateid",count),    StringUtils.trimToEmpty(b.getMandateId()));
+      props.setProperty(SepaUtil.insertIndex("creditorid",count),   StringUtil.trimToEmpty(b.getCreditorId()));
+      props.setProperty(SepaUtil.insertIndex("mandateid",count),    StringUtil.trimToEmpty(b.getMandateId()));
       props.setProperty(SepaUtil.insertIndex("manddateofsig",count),ISO_DATE.format(b.getSignatureDate()));
-      props.setProperty(SepaUtil.insertIndex("purposecode",count),  StringUtils.trimToEmpty(b.getPurposeCode()));
+      props.setProperty(SepaUtil.insertIndex("purposecode",count),  StringUtil.trimToEmpty(b.getPurposeCode()));
       count++;
     }
 

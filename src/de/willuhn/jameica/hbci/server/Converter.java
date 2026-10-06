@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV_Result.GVRDauerList;
 import org.kapott.hbci.GV_Result.GVRKUms;
 import org.kapott.hbci.GV_Result.GVRKontoauszug.Format;
@@ -36,6 +35,7 @@ import de.willuhn.jameica.hbci.rmi.Kontoauszug;
 import de.willuhn.jameica.hbci.rmi.SepaDauerauftrag;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil.Tag;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
 
@@ -181,9 +181,9 @@ public class Converter
 
     // Wenn wir noch keine Gegenkonto-Infos haben, versuchen wir mal, sie aus
     // dem Verwendungszweck zu extrahieren
-    boolean haveIban = StringUtils.trimToNull(umsatz.getGegenkontoNummer()) != null;
-    boolean haveBic  = StringUtils.trimToNull(umsatz.getGegenkontoBLZ()) != null;
-    boolean haveName = StringUtils.trimToNull(umsatz.getGegenkontoName()) != null;
+    boolean haveIban = StringUtil.isNotBlank(umsatz.getGegenkontoNummer());
+    boolean haveBic  = StringUtil.isNotBlank(umsatz.getGegenkontoBLZ());
+    boolean haveName = StringUtil.isNotBlank(umsatz.getGegenkontoName());
 
     if (!haveIban || !haveBic || !haveName)
     {
@@ -197,7 +197,7 @@ public class Converter
 
       Iban i = null;
 
-      if (!haveIban && StringUtils.trimToNull(iban) != null)
+      if (!haveIban && StringUtil.isNotBlank(iban))
       {
         // Nur uebernehmen, wenn es eine gueltige IBAN ist
         try
@@ -214,7 +214,7 @@ public class Converter
 
       if (!haveBic)
       {
-        bic = StringUtils.trimToNull(bic);
+        bic = StringUtil.trimToNull(bic);
         if (bic != null)
         {
           try
@@ -476,7 +476,7 @@ public class Converter
     if (konto.customerid != null && konto.customerid.length() > 0)
       list.addFilter("kundennummer = ?",konto.customerid);
     
-    String type = StringUtils.trimToNull(konto.acctype);
+    String type = StringUtil.trimToNull(konto.acctype);
     Integer accType = null;
     if (type != null)
     {
@@ -559,18 +559,18 @@ public class Converter
     e.setBic(konto.bic);
     e.setIban(konto.iban);
 
-    String name  = StringUtils.trimToEmpty(konto.name);
+    String name  = StringUtil.trimToEmpty(konto.name);
     
     if (!camt)
     {
-      String name2 = StringUtils.trimToEmpty(konto.name2);
+      String name2 = StringUtil.trimToEmpty(konto.name2);
 
       if (name2 != null && name2.length() > 0)
         name += (" " + name2);
     }
 
     if (name != null && name.length() > HBCIProperties.HBCI_TRANSFER_NAME_MAXLENGTH)
-      name = StringUtils.trimToEmpty(name.substring(0,HBCIProperties.HBCI_TRANSFER_NAME_MAXLENGTH)); // Nochmal ein Trim, fuer den Fall, dass nach dem Abschneiden der Text mit Leerzeichen endet
+      name = StringUtil.trimToEmpty(name.substring(0,HBCIProperties.HBCI_TRANSFER_NAME_MAXLENGTH)); // Nochmal ein Trim, fuer den Fall, dass nach dem Abschneiden der Text mit Leerzeichen endet
     e.setName(name);
     return e;   
   }

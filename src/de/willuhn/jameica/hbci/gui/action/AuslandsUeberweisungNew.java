@@ -13,8 +13,6 @@ package de.willuhn.jameica.hbci.gui.action;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.speedbanking.bankdata.BankData;
 import de.speedbanking.bankdata.BankDataLookup;
 import de.speedbanking.iban.Iban;
@@ -35,6 +33,7 @@ import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisungBuchung;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
 import de.willuhn.logging.Logger;
@@ -62,7 +61,7 @@ public class AuslandsUeberweisungNew implements Action
       {
         Konto k = (Konto) context;
         u = (AuslandsUeberweisung) Settings.getDBService().createObject(AuslandsUeberweisung.class,null);
-        if (!k.hasFlag(Konto.FLAG_DISABLED) && !k.hasFlag(Konto.FLAG_OFFLINE) && StringUtils.trimToNull(k.getIban()) != null)
+        if (!k.hasFlag(Konto.FLAG_DISABLED) && !k.hasFlag(Konto.FLAG_OFFLINE) && StringUtil.isNotBlank(k.getIban()))
           u.setKonto(k);
       }
       else if (context instanceof Address)
@@ -84,8 +83,8 @@ public class AuslandsUeberweisungNew implements Action
         // Wenn wir ein Gegenkonto haben, dann pruefen wir, ob es wie eine IBAN aussieht.
         // Falls ja, uebernehmen wir sie. Falls nicht, schauen wir im Adressbuch, ob
         // wir die Adresse kennen und dort vielleicht BIC und IBAN haben
-        String kto = StringUtils.trimToEmpty(umsatz.getGegenkontoNummer());
-        String blz = StringUtils.trimToEmpty(umsatz.getGegenkontoBLZ());
+        String kto = StringUtil.trimToEmpty(umsatz.getGegenkontoNummer());
+        String blz = StringUtil.trimToEmpty(umsatz.getGegenkontoBLZ());
         if (kto.length() <= 10 && kto.length() > 0 && blz.length() > 0) // aber nur, wenn wir auch was zum Suchen im Adressbuch haben
         {
           // kann keine IBAN sein. Die ist per Definition laenger

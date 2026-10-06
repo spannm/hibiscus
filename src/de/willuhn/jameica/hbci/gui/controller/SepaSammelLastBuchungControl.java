@@ -12,7 +12,6 @@ package de.willuhn.jameica.hbci.gui.controller;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -32,6 +31,7 @@ import de.willuhn.jameica.hbci.rmi.HibiscusAddress;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastBuchung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastschrift;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.util.DateUtil;
@@ -98,7 +98,7 @@ public class SepaSammelLastBuchungControl extends AbstractSepaSammelTransferBuch
     {
       if (!s.isNewObject())
       {
-        String id = StringUtils.trimToNull(MetaKey.ADDRESS_ID.get(s));
+        String id = StringUtil.trimToNull(MetaKey.ADDRESS_ID.get(s));
         if (id != null)
           this.address = (HibiscusAddress) Settings.getDBService().createObject(HibiscusAddress.class,id);
       }
@@ -131,8 +131,8 @@ public class SepaSammelLastBuchungControl extends AbstractSepaSammelTransferBuch
     String creditorId       = s.getCreditorId();
     
     // Checken, ob wir im Konto eine Glaeubiger-ID haben
-    if (StringUtils.trimToNull(creditorId) == null)
-      creditorId = StringUtils.trimToNull(MetaKey.SEPA_CREDITOR_ID.get(s.getSammelTransfer().getKonto()));
+    if (StringUtil.isBlank(creditorId))
+      creditorId = StringUtil.trimToNull(MetaKey.SEPA_CREDITOR_ID.get(s.getSammelTransfer().getKonto()));
     
     this.creditorId = new TextInput(creditorId,HBCIProperties.HBCI_SEPA_CREDITORID_MAXLENGTH);
     this.creditorId.setName(i18n.tr("Gläubiger-Identifikation"));
@@ -201,7 +201,7 @@ public class SepaSammelLastBuchungControl extends AbstractSepaSammelTransferBuch
       
       s.transactionBegin();
       
-      s.setCreditorId(StringUtils.trimToNull((String) getCreditorId().getValue()));
+      s.setCreditorId(StringUtil.trimToNull((String) getCreditorId().getValue()));
       s.setMandateId((String) getMandateId().getValue());
       s.setSignatureDate((Date) getSignatureDate().getValue());
       
@@ -281,9 +281,9 @@ public class SepaSammelLastBuchungControl extends AbstractSepaSammelTransferBuch
           // Wir merken uns die ausgewaehlte Adresse fuer die spaetere Speicherung dieser Daten an der Adresse.
           address = (HibiscusAddress) a;
           
-          String miNew = StringUtils.trimToNull(MetaKey.SEPA_MANDATE_ID.get(address));
-          String sdNew = StringUtils.trimToNull(MetaKey.SEPA_MANDATE_SIGDATE.get(address));
-          String miCur               = StringUtils.trimToNull((String)getMandateId().getValue());
+          String miNew = StringUtil.trimToNull(MetaKey.SEPA_MANDATE_ID.get(address));
+          String sdNew = StringUtil.trimToNull(MetaKey.SEPA_MANDATE_SIGDATE.get(address));
+          String miCur               = StringUtil.trimToNull((String)getMandateId().getValue());
           Date sdCur                 = (Date) getSignatureDate().getValue();
           
           if (miNew != null)

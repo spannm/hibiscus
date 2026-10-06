@@ -11,7 +11,6 @@ package de.willuhn.jameica.hbci.gui.dialogs;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -33,6 +32,7 @@ import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.io.csv.Format;
 import de.willuhn.jameica.hbci.io.csv.Profile;
 import de.willuhn.jameica.hbci.io.csv.ProfileUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.util.ApplicationException;
 import de.willuhn.util.I18N;
@@ -106,8 +106,8 @@ public class CSVProfileStoreDialog extends AbstractDialog
     // Checken, ob wir schon eine Nummer im Namen haben
     if (space > 0)
     {
-      String s1 = StringUtils.trimToNull(template.substring(0,space));
-      String s2 = StringUtils.trimToNull(template.substring(space));
+      String s1 = StringUtil.trimToNull(template.substring(0,space));
+      String s2 = StringUtil.trimToNull(template.substring(space));
       if (s1 != null && s2 != null && s2.matches("[0-9]{1,4}"))
         template = s1;
     }
@@ -235,7 +235,7 @@ public class CSVProfileStoreDialog extends AbstractDialog
   private void updateUI()
   {
     // Apply-Button deaktivieren, wenn nichts drin steht.
-    final String text = StringUtils.trimToNull((String) name.getValue());
+    final String text = StringUtil.trimToNull((String) name.getValue());
     getApply().setEnabled(text != null);
     
     // Hier brauchen wir nichts weiter checken

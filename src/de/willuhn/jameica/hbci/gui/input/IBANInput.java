@@ -10,7 +10,6 @@
 
 package de.willuhn.jameica.hbci.gui.input;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -22,6 +21,7 @@ import de.willuhn.jameica.gui.input.TextInput;
 import de.willuhn.jameica.hbci.HBCIProperties;
 import de.willuhn.jameica.hbci.IbanCommonsProperties;
 import de.willuhn.jameica.hbci.Settings;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.util.ApplicationException;
@@ -74,7 +74,7 @@ public class IBANInput extends TextInput
       return;
     
     // Formatierungsleerzeichen zum Testen entfernen
-    String s = StringUtils.trimToNull(StringUtils.deleteWhitespace(value.toString()));
+    String s = StringUtil.trimToNull(StringUtil.deleteWhitespace(value.toString()));
     if (s == null)
       return;
     
@@ -91,7 +91,7 @@ public class IBANInput extends TextInput
 
       // 2. Wenn wir ein BICInput haben, dann gleich noch die BIC ermitteln und
       // vervollstaendigen. Aber nur, wenn nicht schon eine BIC eingetragen ist.
-      if (StringUtils.trimToNull((String)this.bicInput.getValue()) != null)
+      if (StringUtil.isNotBlank((String)this.bicInput.getValue()))
         return;
 
       // BIC länderübergreifend ermitteln, soweit iban-commons-bankdata die IBAN
@@ -120,7 +120,7 @@ public class IBANInput extends TextInput
     if (s == null)
       return s;
     
-    return StringUtils.deleteWhitespace(s);
+    return StringUtil.deleteWhitespace(s);
   }
   
   /**

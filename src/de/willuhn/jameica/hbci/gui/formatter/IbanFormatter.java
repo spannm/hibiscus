@@ -10,10 +10,9 @@
 
 package de.willuhn.jameica.hbci.gui.formatter;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.gui.formatter.Formatter;
 import de.willuhn.jameica.hbci.HBCIProperties;
+import de.willuhn.jameica.hbci.util.StringUtil;
 
 /**
  * Formatiert eine IBAN.
@@ -30,7 +29,7 @@ public class IbanFormatter implements Formatter
       return "";
 
     String s = o.toString();
-    if (StringUtils.trimToEmpty(s).length() > 10) // IBAN
+    if (StringUtil.trimToEmpty(s).length() > 10) // IBAN
       return HBCIProperties.formatIban(s);
     
     return s;

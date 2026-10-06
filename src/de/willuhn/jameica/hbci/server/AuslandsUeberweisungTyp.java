@@ -12,10 +12,9 @@ package de.willuhn.jameica.hbci.server;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.rmi.AuslandsUeberweisung;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.util.I18N;
 
@@ -95,7 +94,7 @@ public enum AuslandsUeberweisungTyp
    */
   public static AuslandsUeberweisungTyp byName(String name)
   {
-    name = StringUtils.trimToNull(name);
+    name = StringUtil.trimToNull(name);
     if (name == null)
       return null;
 

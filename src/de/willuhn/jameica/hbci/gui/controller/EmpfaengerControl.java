@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -57,6 +56,7 @@ import de.willuhn.jameica.hbci.rmi.SepaLastschrift;
 import de.willuhn.jameica.hbci.rmi.SepaSammelLastBuchung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisungBuchung;
 import de.willuhn.jameica.hbci.server.UmsatzUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
@@ -163,9 +163,9 @@ public class EmpfaengerControl extends AbstractControl
     String iban = a.getIban();
     String konto = a.getKontonummer();
     
-    if (StringUtils.isNotEmpty(iban)) // haben wir eine IBAN?
+    if (StringUtil.isNotEmpty(iban)) // haben wir eine IBAN?
     {
-      if (StringUtils.isNotEmpty(konto)) // haben wir ausserdem Konto/BLZ?
+      if (StringUtil.isNotEmpty(konto)) // haben wir ausserdem Konto/BLZ?
         list.addFilter("((empfaenger_konto like ? and empfaenger_blz = ?) or lower(empfaenger_konto) = ?)","%" + konto, a.getBlz(), iban.toLowerCase());
       else // nur IBAN // BUGZILLA 1395
         list.addFilter("lower(empfaenger_konto) = ?",iban.toLowerCase());
@@ -363,10 +363,10 @@ public class EmpfaengerControl extends AbstractControl
           try
           {
             String iban      = (String) getIban().getValue();
-            boolean haveIban = StringUtils.trimToNull(iban) != null;
-            boolean haveKto  = StringUtils.trimToNull((String) getKontonummer().getValue()) != null;
-            boolean haveBlz  = StringUtils.trimToNull((String) getBlz().getValue()) != null;
-            boolean haveBank = StringUtils.trimToNull((String) getBank().getValue()) != null;
+            boolean haveIban = StringUtil.isNotBlank(iban);
+            boolean haveKto  = StringUtil.isNotBlank((String) getKontonummer().getValue());
+            boolean haveBlz  = StringUtil.isNotBlank((String) getBlz().getValue());
+            boolean haveBank = StringUtil.isNotBlank((String) getBank().getValue());
 
             if (!haveIban)
               return;
@@ -433,7 +433,7 @@ public class EmpfaengerControl extends AbstractControl
             String bic = (String) getBic().getValue();
             String blz = (String) getBlz().getValue();
             
-            if (StringUtils.trimToNull(bic) != null && StringUtils.trimToNull(blz) == null)
+            if (StringUtil.isNotBlank(bic) && StringUtil.isBlank(blz))
             {
               Optional<BankData> bankData = BankDataLookup.byBic(bic);
               if (!bankData.isPresent())
@@ -501,11 +501,11 @@ public class EmpfaengerControl extends AbstractControl
 	  {
 	    try
 	    {
-        String blz  = StringUtils.trimToNull((String) getBlz().getValue());
-        String bic  = StringUtils.trimToNull((String) getBic().getValue());
+        String blz  = StringUtil.trimToNull((String) getBlz().getValue());
+        String bic  = StringUtil.trimToNull((String) getBic().getValue());
         
-        String kto  = StringUtils.trimToNull((String) getKontonummer().getValue());
-        String iban = StringUtils.trimToNull((String) getIban().getValue());
+        String kto  = StringUtil.trimToNull((String) getKontonummer().getValue());
+        String iban = StringUtil.trimToNull((String) getIban().getValue());
 
 	      if (blz != null && blz.length() == HBCIProperties.HBCI_BLZ_LENGTH)
 	      {

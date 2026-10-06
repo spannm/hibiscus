@@ -14,7 +14,6 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Optional;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -58,6 +57,7 @@ import de.willuhn.jameica.hbci.rmi.SepaLastType;
 import de.willuhn.jameica.hbci.rmi.SepaLastschrift;
 import de.willuhn.jameica.hbci.rmi.Terminable;
 import de.willuhn.jameica.hbci.synchronize.jobs.SynchronizeJobSepaLastschrift;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.MessageBus;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.reminder.ReminderInterval;
@@ -193,7 +193,7 @@ public class SepaLastschriftControl extends AbstractControl
       SepaLastschrift s = this.getTransfer();
       if (!s.isNewObject())
       {
-        String id = StringUtils.trimToNull(MetaKey.ADDRESS_ID.get(s));
+        String id = StringUtil.trimToNull(MetaKey.ADDRESS_ID.get(s));
         if (id != null)
           this.address = (HibiscusAddress) Settings.getDBService().createObject(HibiscusAddress.class,id);
       }
@@ -512,7 +512,7 @@ public class SepaLastschriftControl extends AbstractControl
       t.setTermin((Date) getTermin().getValue());
       t.setEndtoEndId((String) getEndToEndId().getValue());
       t.setPmtInfId((String) getPmtInfId().getValue());
-      t.setCreditorId(StringUtils.trimToNull((String) getCreditorId().getValue()));
+      t.setCreditorId(StringUtil.trimToNull((String) getCreditorId().getValue()));
       t.setMandateId((String) getMandateId().getValue());
       t.setSignatureDate((Date) getSignatureDate().getValue());
       t.setSequenceType((SepaLastSequenceType)getSequenceType().getValue());
@@ -639,7 +639,7 @@ public class SepaLastschriftControl extends AbstractControl
         getTransfer().setKonto(konto);
         
         // Checken, ob wir im Konto eine Glaeubiger-ID haben
-        String creditorId = StringUtils.trimToNull(MetaKey.SEPA_CREDITOR_ID.get(konto));
+        String creditorId = StringUtil.trimToNull(MetaKey.SEPA_CREDITOR_ID.get(konto));
         if (creditorId != null)
           getCreditorId().setValue(creditorId);
       }
@@ -680,7 +680,7 @@ public class SepaLastschriftControl extends AbstractControl
         
         try
         {
-          String zweck = StringUtils.trimToNull((String) getZweck().getValue());
+          String zweck = StringUtil.trimToNull((String) getZweck().getValue());
           if (zweck == null)
           {
             // Verwendungszweck vervollstaendigen
@@ -708,10 +708,10 @@ public class SepaLastschriftControl extends AbstractControl
           // Wir merken uns die ausgewaehlte Adresse fuer die spaetere Speicherung dieser Daten an der Adresse.
           address = (HibiscusAddress) a;
           
-          String miNew = StringUtils.trimToNull(MetaKey.SEPA_MANDATE_ID.get(address));
-          String sdNew = StringUtils.trimToNull(MetaKey.SEPA_MANDATE_SIGDATE.get(address));
-          String scNew = StringUtils.trimToNull(MetaKey.SEPA_SEQUENCE_CODE.get(address));
-          String miCur               = StringUtils.trimToNull((String)getMandateId().getValue());
+          String miNew = StringUtil.trimToNull(MetaKey.SEPA_MANDATE_ID.get(address));
+          String sdNew = StringUtil.trimToNull(MetaKey.SEPA_MANDATE_SIGDATE.get(address));
+          String scNew = StringUtil.trimToNull(MetaKey.SEPA_SEQUENCE_CODE.get(address));
+          String miCur               = StringUtil.trimToNull((String)getMandateId().getValue());
           Date sdCur                 = (Date) getSignatureDate().getValue();
           
           if (miNew != null)

@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.graphics.RGB;
 
 import de.willuhn.jameica.hbci.HBCI;
@@ -28,6 +27,7 @@ import de.willuhn.jameica.hbci.gui.parts.UmsatzList;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
 import net.sf.paperclips.DefaultGridLook;
@@ -158,7 +158,7 @@ public class PrintSupportUmsatzList extends AbstractPrintSupport
               sb.append(i18n.tr("{0} - {1}",kto,gi != null && gi.length() > 0 ? gi : blz));
             }
             
-            String usage = StringUtils.trimToNull(VerwendungszweckUtil.toString(u));
+            String usage = StringUtil.trimToNull(VerwendungszweckUtil.toString(u));
             if (usage != null)
             {
               if (sb.length() > 0)

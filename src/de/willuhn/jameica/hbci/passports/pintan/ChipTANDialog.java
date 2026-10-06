@@ -12,7 +12,6 @@ package de.willuhn.jameica.hbci.passports.pintan;
 import java.rmi.RemoteException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -47,6 +46,7 @@ import de.willuhn.jameica.gui.util.DelayedListener;
 import de.willuhn.jameica.gui.util.SWTUtil;
 import de.willuhn.jameica.gui.util.SimpleContainer;
 import de.willuhn.jameica.hbci.passports.pintan.rmi.PinTanConfig;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.Settings;
@@ -108,7 +108,7 @@ public class ChipTANDialog extends TANDialog
   public void setText(String text)
   {
     // Ueberschrieben, um den im Fliesstext am Anfang enthaltenen Flicker-Code rauszuschneiden.
-    text = StringUtils.trimToNull(text);
+    text = StringUtil.trimToNull(text);
     if (text != null)
     {
       final String token2 = "CHLGTEXT";
@@ -290,7 +290,7 @@ public class ChipTANDialog extends TANDialog
           try
           {
             Logger.info("trying to get TAN using USB cardreader");
-            String s = StringUtils.trimToNull(service.getTan(code));
+            String s = StringUtil.trimToNull(service.getTan(code));
             if (s != null && s.length() > 0 && !cancelled.get())
             {
               applyTAN(s);

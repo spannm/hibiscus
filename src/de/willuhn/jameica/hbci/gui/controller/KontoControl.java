@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -60,6 +59,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.server.KontoUtil;
 import de.willuhn.jameica.hbci.synchronize.SynchronizeBackend;
 import de.willuhn.jameica.hbci.synchronize.hbci.HBCISynchronizeBackend;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.Message;
 import de.willuhn.jameica.messaging.MessageConsumer;
 import de.willuhn.jameica.messaging.StatusBarMessage;
@@ -559,14 +559,14 @@ public class KontoControl extends AbstractControl
         try
         {
           String iban      = (String) getIban().getValue();
-          boolean haveIban = StringUtils.trimToNull(iban) != null;
-          boolean haveKto  = StringUtils.trimToNull((String) getKontonummer().getValue()) != null;
-          boolean haveBlz  = StringUtils.trimToNull((String) getBlz().getValue()) != null;
+          boolean haveIban = StringUtil.isNotBlank(iban);
+          boolean haveKto  = StringUtil.isNotBlank((String) getKontonummer().getValue());
+          boolean haveBlz  = StringUtil.isNotBlank((String) getBlz().getValue());
           
           if (haveIban && (!haveKto || !haveBlz))
           {
             Iban i = Iban.of(iban);
-            if (StringUtils.trimToNull(i.getBankCode()) == null)
+            if (StringUtil.isBlank(i.getBankCode()))
             {
               Logger.info("length of bank identifier unknown for this country");
               return;
@@ -611,7 +611,7 @@ public class KontoControl extends AbstractControl
           String bic = (String) getBic().getValue();
           String blz = (String) getBlz().getValue();
           
-          if (StringUtils.trimToNull(bic) != null && StringUtils.trimToNull(blz) == null)
+          if (StringUtil.isNotBlank(bic) && StringUtil.isBlank(blz))
           {
             Optional<BankData> bankData = BankDataLookup.byBic(bic);
             if (!bankData.isPresent())
@@ -688,11 +688,11 @@ public class KontoControl extends AbstractControl
     {
       try
       {
-        String blz  = StringUtils.trimToNull((String) getBlz().getValue());
-        String bic  = StringUtils.trimToNull((String) getBic().getValue());
+        String blz  = StringUtil.trimToNull((String) getBlz().getValue());
+        String bic  = StringUtil.trimToNull((String) getBic().getValue());
         
-        String kto  = StringUtils.trimToNull((String) getKontonummer().getValue());
-        String iban = StringUtils.trimToNull((String) getIban().getValue());
+        String kto  = StringUtil.trimToNull((String) getKontonummer().getValue());
+        String iban = StringUtil.trimToNull((String) getIban().getValue());
 
         String txt = null;
         
@@ -712,7 +712,7 @@ public class KontoControl extends AbstractControl
           {
             if (newBic == null)
               newBic = BankDataLookup.byBankCode("DE",blz).map(BankData::getBic).map(Object::toString).orElse(null);
-            if (StringUtils.trimToNull(newBic) != null)
+            if (StringUtil.isNotBlank(newBic))
             {
               getBic().setValue(newBic);
               txt = i18n.tr("BIC vervollständigt. Zum Übernehmen \"Speichern\" drücken.");

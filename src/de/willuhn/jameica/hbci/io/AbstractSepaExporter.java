@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV.generators.ISEPAGenerator;
 import org.kapott.hbci.GV.generators.SEPAGeneratorFactory;
 import org.kapott.hbci.sepa.SepaVersion;
@@ -30,6 +29,7 @@ import de.willuhn.jameica.hbci.gui.filter.KontoFilter;
 import de.willuhn.jameica.hbci.rmi.HibiscusTransfer;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.SepaSammelTransfer;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ProgressMonitor;
 
@@ -100,9 +100,9 @@ public abstract class AbstractSepaExporter extends AbstractExporter
     ctx.version = (SepaVersion) d.open();
 
     // Header-Infos zuweisen
-    ctx.props.setProperty("src.bic",    StringUtils.trimToEmpty(konto.getBic()));
-    ctx.props.setProperty("src.iban",   StringUtils.trimToEmpty(konto.getIban()));
-    ctx.props.setProperty("src.name",   StringUtils.trimToEmpty(konto.getName()));
+    ctx.props.setProperty("src.bic",    StringUtil.trimToEmpty(konto.getBic()));
+    ctx.props.setProperty("src.iban",   StringUtil.trimToEmpty(konto.getIban()));
+    ctx.props.setProperty("src.name",   StringUtil.trimToEmpty(konto.getName()));
     ctx.props.setProperty("sepaid",     Long.toString(System.currentTimeMillis()));
   }
 

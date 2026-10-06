@@ -11,8 +11,6 @@ package de.willuhn.jameica.hbci.gui.menus;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.gui.Action;
 import de.willuhn.jameica.gui.extension.Extendable;
 import de.willuhn.jameica.gui.extension.ExtensionRegistry;
@@ -31,6 +29,7 @@ import de.willuhn.jameica.hbci.gui.action.SepaDauerauftragNew;
 import de.willuhn.jameica.hbci.gui.action.SepaLastschriftNew;
 import de.willuhn.jameica.hbci.rmi.Address;
 import de.willuhn.jameica.hbci.rmi.HibiscusAddress;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -95,7 +94,7 @@ public class EmpfaengerList extends ContextMenu implements Extendable
         if (o instanceof HibiscusAddress)
         {
           final HibiscusAddress a = (HibiscusAddress) o;
-          final String iban = StringUtils.deleteWhitespace(a.getIban());
+          final String iban = StringUtil.deleteWhitespace(a.getIban());
           return (iban == null || iban.length() == 0);
         }
         
@@ -105,7 +104,7 @@ public class EmpfaengerList extends ContextMenu implements Extendable
           final HibiscusAddress[] list = (HibiscusAddress[]) o;
           for (HibiscusAddress a:list)
           {
-            final String iban = StringUtils.deleteWhitespace(a.getIban());
+            final String iban = StringUtil.deleteWhitespace(a.getIban());
             if (iban == null || iban.length() == 0)
               return true;
           }

@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV_Result.GVRKontoauszug.Format;
 
 import de.willuhn.datasource.GenericIterator;
@@ -43,6 +41,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Kontoauszug;
 import de.willuhn.jameica.hbci.rmi.Protokoll;
 import de.willuhn.jameica.hbci.server.BPDUtil.Support;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.QueryMessage;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.services.VelocityService;
@@ -80,8 +79,8 @@ public class KontoauszugPdfUtil
     {
       // Wenn ein Pfad und Dateiname angegeben ist, dann sollte die Datei
       // dort auch liegen
-      final String path = StringUtils.trimToNull(ka.getPfad());
-      final String name = StringUtils.trimToNull(ka.getDateiname());
+      final String path = StringUtil.trimToNull(ka.getPfad());
+      final String name = StringUtil.trimToNull(ka.getDateiname());
       
       if (path != null && name != null)
       {
@@ -103,7 +102,7 @@ public class KontoauszugPdfUtil
         return file;
       }
       
-      final String uuid = StringUtils.trimToNull(ka.getUUID());
+      final String uuid = StringUtil.trimToNull(ka.getUUID());
 
       Logger.info("trying to open pdf file using messaging, uuid: " + uuid);
 
@@ -121,7 +120,7 @@ public class KontoauszugPdfUtil
       }
       Logger.info("got " + data.length + " bytes from messaging for uuid: " + uuid);
       
-      File file = File.createTempFile("kontoauszug-" + RandomStringUtils.randomAlphanumeric(5),".pdf");
+      File file = File.createTempFile("kontoauszug-" + StringUtil.randomAlphanumeric(5),".pdf");
       file.deleteOnExit();
       
       OutputStream os = null;
@@ -168,8 +167,8 @@ public class KontoauszugPdfUtil
     {
       // Wenn ein Pfad und Dateiname angegeben ist, dann sollte die Datei
       // dort auch liegen
-      final String path = StringUtils.trimToNull(ka.getPfad());
-      final String name = StringUtils.trimToNull(ka.getDateiname());
+      final String path = StringUtil.trimToNull(ka.getPfad());
+      final String name = StringUtil.trimToNull(ka.getDateiname());
       
       if (path != null && name != null)
       {
@@ -193,7 +192,7 @@ public class KontoauszugPdfUtil
         return;
       }
       
-      final String uuid = StringUtils.trimToNull(ka.getUUID());
+      final String uuid = StringUtil.trimToNull(ka.getUUID());
 
       Logger.info("trying to open pdf file using messaging, uuid: " + uuid);
 
@@ -407,17 +406,17 @@ public class KontoauszugPdfUtil
     Map<String,Object> ctx = new HashMap<String,Object>();
     
     {
-      String iban = StringUtils.trimToNull(k.getIban());
+      String iban = StringUtil.trimToNull(k.getIban());
       if (iban == null)
-        iban = StringUtils.trimToEmpty(k.getKontonummer());
+        iban = StringUtil.trimToEmpty(k.getKontonummer());
       
       ctx.put("iban",iban.replaceAll(" ",""));
     }
     
     {
-      String bic = StringUtils.trimToNull(k.getBic());
+      String bic = StringUtil.trimToNull(k.getBic());
       if (bic == null)
-        bic = StringUtils.trimToEmpty(k.getBLZ());
+        bic = StringUtil.trimToEmpty(k.getBLZ());
 
       ctx.put("bic",bic.replaceAll(" ",""));
     }

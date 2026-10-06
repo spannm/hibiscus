@@ -14,7 +14,6 @@ import java.io.File;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
@@ -37,6 +36,7 @@ import de.willuhn.jameica.hbci.gui.parts.KontoauszugPdfList;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Kontoauszug;
 import de.willuhn.jameica.hbci.server.KontoauszugPdfUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
@@ -321,7 +321,7 @@ public class KontoauszugPdfControl extends AbstractControl
       return this.datei;
     
     Kontoauszug k = this.getKontoauszug();
-    if (StringUtils.trimToNull(k.getUUID()) != null)
+    if (StringUtil.isNotBlank(k.getUUID()))
     {
       this.datei = new LabelInput(i18n.tr("In Archiv-Server gespeichert"));
     }
@@ -352,7 +352,7 @@ public class KontoauszugPdfControl extends AbstractControl
           try
           {
             // Wir merken uns den zuletzt ausgewaehlten Pfad pro Konto
-            String file = StringUtils.trimToNull((String) getDatei().getValue());
+            String file = StringUtil.trimToNull((String) getDatei().getValue());
             if (file != null)
             {
               File f = new File(file);
@@ -403,7 +403,7 @@ public class KontoauszugPdfControl extends AbstractControl
     // hat, wuerden wir sonst nicht die aktuell vom User ausgewaehlte Datei offnen.
     try
     {
-      String file = StringUtils.trimToNull((String) this.getDatei().getValue());
+      String file = StringUtil.trimToNull((String) this.getDatei().getValue());
       File f = file != null ? new File(file) : KontoauszugPdfUtil.getFile(this.getKontoauszug());
       
       if (!f.exists() || !f.canRead())
@@ -446,7 +446,7 @@ public class KontoauszugPdfControl extends AbstractControl
       k.setName3((String) this.getName3().getValue());
       k.setNummer((Integer) this.getNummer().getValue());
 
-      String file = StringUtils.trimToNull((String) this.getDatei().getValue());
+      String file = StringUtil.trimToNull((String) this.getDatei().getValue());
 
       File f = file != null ? new File(file) : null;
       String name = f != null ? f.getName() : null;

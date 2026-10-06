@@ -13,7 +13,6 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV_Result.GVRDauerList;
 import org.kapott.hbci.GV_Result.GVRDauerList.Dauer;
 
@@ -27,6 +26,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Protokoll;
 import de.willuhn.jameica.hbci.rmi.SepaDauerauftrag;
 import de.willuhn.jameica.hbci.server.Converter;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -202,8 +202,8 @@ public class HBCISepaDauerauftragListJob extends AbstractHBCIJob
       if (!local.isActive())
         continue; // der ist noch gar nicht bei der Bank und muss daher auch nicht abgeglichen werden
       
-      String idLocal  = StringUtils.trimToEmpty(local.getOrderID());
-      String idRemote = StringUtils.trimToEmpty(remote.getOrderID());
+      String idLocal  = StringUtil.trimToEmpty(local.getOrderID());
+      String idRemote = StringUtil.trimToEmpty(remote.getOrderID());
 
       // Platzhalter-ID verwenden, wenn die Bank keine uebertragen hat
       if (idRemote.length() == 0)

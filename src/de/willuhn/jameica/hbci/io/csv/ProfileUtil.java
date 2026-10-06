@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.gui.dialogs.CSVProfileStoreDialog;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
@@ -76,7 +75,7 @@ public class ProfileUtil
         // Das hatte gar keinen Namen. Falls also ein Profil ohne Name existiert (inzwischen koennen keine
         // mehr ohne Name gespeichert werden), dann ist es das vom User geaenderte Profil. Das machen wir
         // automatisch zum ersten User-spezifischen Profil
-        if (StringUtils.trimToNull(p.getName()) == null)
+        if (StringUtil.isBlank(p.getName()))
         {
           p.setName(dp.getName() + " 2");
           p.setSystem(false);
@@ -150,7 +149,7 @@ public class ProfileUtil
           continue;
         
         // Ebenso Profile ohne Namen.
-        if (StringUtils.trimToNull(p.getName()) == null)
+        if (StringUtil.isBlank(p.getName()))
           continue;
         
         encoder.writeObject(p);

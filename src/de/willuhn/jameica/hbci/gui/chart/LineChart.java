@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
@@ -38,6 +37,7 @@ import de.willuhn.datasource.BeanUtil;
 import de.willuhn.jameica.gui.GUI;
 import de.willuhn.jameica.gui.util.Font;
 import de.willuhn.jameica.hbci.HBCI;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ColorGenerator;
 
@@ -99,7 +99,7 @@ public class LineChart extends AbstractChart<LineChartData>
         }
       }
 
-      String name = StringUtils.trimToEmpty(cd.getLabel());
+      String name = StringUtil.trimToEmpty(cd.getLabel());
       if (name.length() == 0)
       {
         name = num + ".";

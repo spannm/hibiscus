@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV.SepaUtil;
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.sepa.SepaVersion.Type;
@@ -24,6 +23,7 @@ import de.willuhn.jameica.hbci.MetaKey;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisungBuchung;
+import de.willuhn.jameica.hbci.util.StringUtil;
 
 /**
  * Exporter fuer SEPA-Sammel-Ueberweisungen.
@@ -45,7 +45,7 @@ public class SepaSammelUeberweisungExporter extends AbstractSepaExporter
       if (batchbook != null)
         props.setProperty("batchbook", batchbook);
 
-      props.setProperty("pmtinfid", StringUtils.trimToEmpty(u.getPmtInfId()));
+      props.setProperty("pmtinfid", StringUtil.trimToEmpty(u.getPmtInfId()));
 
     }
 
@@ -56,21 +56,21 @@ public class SepaSammelUeberweisungExporter extends AbstractSepaExporter
     List<SepaSammelUeberweisungBuchung> buchungen = u.getBuchungen();
     for (SepaSammelUeberweisungBuchung b : buchungen)
     {
-      props.setProperty(SepaUtil.insertIndex("dst.bic",count),      StringUtils.trimToEmpty(b.getGegenkontoBLZ()));
-      props.setProperty(SepaUtil.insertIndex("dst.iban",count),     StringUtils.trimToEmpty(b.getGegenkontoNummer()));
-      props.setProperty(SepaUtil.insertIndex("dst.name",count),     StringUtils.trimToEmpty(b.getGegenkontoName()));
+      props.setProperty(SepaUtil.insertIndex("dst.bic",count),      StringUtil.trimToEmpty(b.getGegenkontoBLZ()));
+      props.setProperty(SepaUtil.insertIndex("dst.iban",count),     StringUtil.trimToEmpty(b.getGegenkontoNummer()));
+      props.setProperty(SepaUtil.insertIndex("dst.name",count),     StringUtil.trimToEmpty(b.getGegenkontoName()));
       props.setProperty(SepaUtil.insertIndex("btg.value",count),    HBCIUtils.value2String(b.getBetrag()));
       props.setProperty(SepaUtil.insertIndex("btg.curr",count),     k.getWaehrung() != null ? k.getWaehrung() : HBCIProperties.CURRENCY_DEFAULT_DE);
-      props.setProperty(SepaUtil.insertIndex("usage",count),        StringUtils.trimToEmpty(b.getZweck()));
-      props.setProperty(SepaUtil.insertIndex("endtoendid",count),   StringUtils.trimToEmpty(b.getEndtoEndId()));
-      props.setProperty(SepaUtil.insertIndex("purposecode",count),  StringUtils.trimToEmpty(b.getPurposeCode()));
+      props.setProperty(SepaUtil.insertIndex("usage",count),        StringUtil.trimToEmpty(b.getZweck()));
+      props.setProperty(SepaUtil.insertIndex("endtoendid",count),   StringUtil.trimToEmpty(b.getEndtoEndId()));
+      props.setProperty(SepaUtil.insertIndex("purposecode",count),  StringUtil.trimToEmpty(b.getPurposeCode()));
       count++;
     }
 
     if (u.isTerminUeberweisung())
     {
       SimpleDateFormat df = new SimpleDateFormat(SepaUtil.DATE_FORMAT);
-      String date = StringUtils.trimToNull(df.format(u.getTermin()));
+      String date = StringUtil.trimToNull(df.format(u.getTermin()));
       if (date != null)
         props.setProperty("date",date);
     }

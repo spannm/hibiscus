@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV.SepaUtil;
 import org.kapott.hbci.GV.parsers.ISEPAParser;
 import org.kapott.hbci.sepa.SepaVersion;
@@ -30,6 +29,7 @@ import de.willuhn.jameica.hbci.messaging.ObjectChangedMessage;
 import de.willuhn.jameica.hbci.rmi.BatchBookType;
 import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisung;
 import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisungBuchung;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 
 /**
@@ -54,9 +54,9 @@ public class SepaSammelUeberweisungImporter extends AbstractSepaImporter
       ueb = (SepaSammelUeberweisung) service.createObject(SepaSammelUeberweisung.class,null);
       ueb.setBezeichnung(i18n.tr("SEPA-Sammelüberweisung vom {0}",HBCI.LONGDATEFORMAT.format(new Date())));
       ueb.setKonto(this.findKonto(prop.getProperty(ISEPAParser.Names.SRC_IBAN.getValue())));
-      ueb.setPmtInfId(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.PMTINFID.getValue())));
+      ueb.setPmtInfId(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.PMTINFID.getValue())));
       
-      String date = StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.DATE.getValue()));
+      String date = StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.DATE.getValue()));
       
       if (date != null && !SepaUtil.DATE_UNDEFINED.equals(date))
         ueb.setTermin(ISO_DATE.parse(date));
@@ -76,8 +76,8 @@ public class SepaSammelUeberweisungImporter extends AbstractSepaImporter
     u.setGegenkontoBLZ(prop.getProperty(ISEPAParser.Names.DST_BIC.getValue()));
     u.setZweck(prop.getProperty(ISEPAParser.Names.USAGE.getValue()));
     u.setBetrag(this.parseValue(prop.getProperty(ISEPAParser.Names.VALUE.getValue())));
-    u.setEndtoEndId(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.ENDTOENDID.getValue())));
-    u.setPurposeCode(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.PURPOSECODE.getValue())));
+    u.setEndtoEndId(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.ENDTOENDID.getValue())));
+    u.setPurposeCode(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.PURPOSECODE.getValue())));
     
     u.store();
     

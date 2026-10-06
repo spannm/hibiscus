@@ -10,11 +10,10 @@
 
 package de.willuhn.jameica.hbci.gui.action;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.gui.Action;
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.passports.pintan.ChipTANDialog;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
@@ -57,7 +56,7 @@ public class ChipTanTest implements Action
                         "    \"Betrag: 0,20\"\n" +
                         "    angezeigt werden\n" +
                         "7. Nach einer weiterer Bestätigung mit \"OK\" sollte eine TAN generiert werden.\n"));
-      String tan = StringUtils.trimToNull((String) d.open());
+      String tan = StringUtil.trimToNull((String) d.open());
       if (tan != null)
         Application.getMessagingFactory().sendMessage(new StatusBarMessage(i18n.tr("Eingegebene TAN: {0}",tan),StatusBarMessage.TYPE_SUCCESS));
       else

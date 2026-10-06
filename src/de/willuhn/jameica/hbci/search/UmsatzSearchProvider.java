@@ -15,14 +15,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.datasource.rmi.DBIterator;
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.gui.action.UmsatzDetail;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.UmsatzUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.search.Result;
 import de.willuhn.jameica.search.SearchProvider;
 import de.willuhn.jameica.system.Application;
@@ -90,7 +89,7 @@ public class UmsatzSearchProvider implements SearchProvider
         Date date             = umsatz.getDatum();
         double betrag         = umsatz.getBetrag();
         String rel            = i18n.tr(betrag > 0 ? "von" : "an");
-        String zweck          = StringUtils.trimToEmpty(umsatz.getZweck());
+        String zweck          = StringUtil.trimToEmpty(umsatz.getZweck());
         String gegenkontoName = umsatz.getGegenkontoName();
 
         betrag = Math.abs(betrag);

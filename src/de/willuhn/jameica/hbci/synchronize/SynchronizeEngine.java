@@ -16,14 +16,13 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.annotation.Lifecycle;
 import de.willuhn.annotation.Lifecycle.Type;
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.synchronize.hbci.HBCISynchronizeBackend;
 import de.willuhn.jameica.hbci.synchronize.jobs.SynchronizeJob;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.services.BeanService;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
@@ -114,7 +113,7 @@ public class SynchronizeEngine
   {
     try
     {
-      String s = konto != null ? StringUtils.trimToNull(konto.getBackendClass()) : null;
+      String s = konto != null ? StringUtil.trimToNull(konto.getBackendClass()) : null;
       for (SynchronizeBackend b:this.getBackends())
       {
         if (s != null && s.equals(b.getClass().getName()))

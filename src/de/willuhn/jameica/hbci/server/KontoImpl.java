@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.zip.CRC32;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.datasource.rmi.DBIterator;
 import de.willuhn.datasource.rmi.ResultSetExtractor;
 import de.willuhn.jameica.hbci.HBCI;
@@ -37,6 +35,7 @@ import de.willuhn.jameica.hbci.rmi.SepaSammelUeberweisung;
 import de.willuhn.jameica.hbci.rmi.Ueberweisung;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.rmi.UmsatzTyp;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.util.DateUtil;
 import de.willuhn.logging.Logger;
@@ -84,7 +83,7 @@ public class KontoImpl extends AbstractHibiscusDBObject implements Konto
   {
     try
     {
-      if (StringUtils.trimToNull(getName()) == null)
+      if (StringUtil.isBlank(getName()))
         throw new ApplicationException(i18n.tr("Bitten geben Sie den Namen des Kontoinhabers ein."));
 
       HBCIProperties.checkLength(getName(), HBCIProperties.HBCI_TRANSFER_NAME_MAXLENGTH);
@@ -761,7 +760,7 @@ public class KontoImpl extends AbstractHibiscusDBObject implements Konto
         
       // Wir muessen die IBAN etwas verkuerzt anzeigen. Das passt sonst nicht hin.
       if (haveIban)
-        kto = extralong ? HBCIProperties.formatIban(iban) : StringUtils.abbreviateMiddle(iban,"..",14);
+        kto = extralong ? HBCIProperties.formatIban(iban) : StringUtil.abbreviateMiddle(iban,"..",14);
       
       String k = i18n.tr(haveIban ? "IBAN" : "Kto.");
 

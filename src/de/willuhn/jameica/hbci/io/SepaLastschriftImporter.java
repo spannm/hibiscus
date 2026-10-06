@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV.SepaUtil;
 import org.kapott.hbci.GV.parsers.ISEPAParser;
 import org.kapott.hbci.sepa.SepaVersion;
@@ -26,6 +25,7 @@ import de.willuhn.jameica.hbci.messaging.ImportMessage;
 import de.willuhn.jameica.hbci.rmi.SepaLastSequenceType;
 import de.willuhn.jameica.hbci.rmi.SepaLastType;
 import de.willuhn.jameica.hbci.rmi.SepaLastschrift;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 
 /**
@@ -50,19 +50,19 @@ public class SepaLastschriftImporter extends AbstractSepaImporter
     
     u.setBetrag(this.parseValue(prop.getProperty(ISEPAParser.Names.VALUE.getValue())));
 
-    String date = StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.TARGETDATE.getValue()));
+    String date = StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.TARGETDATE.getValue()));
     
     if (date != null && !SepaUtil.DATE_UNDEFINED.equals(date))
       u.setTargetDate(ISO_DATE.parse(date));
 
-    u.setEndtoEndId(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.ENDTOENDID.getValue())));
-    u.setPmtInfId(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.PMTINFID.getValue())));
-    u.setPurposeCode(StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.PURPOSECODE.getValue())));
+    u.setEndtoEndId(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.ENDTOENDID.getValue())));
+    u.setPmtInfId(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.PMTINFID.getValue())));
+    u.setPurposeCode(StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.PURPOSECODE.getValue())));
 
     u.setCreditorId(prop.getProperty(ISEPAParser.Names.CREDITORID.getValue()));
     u.setMandateId(prop.getProperty(ISEPAParser.Names.MANDATEID.getValue()));
     
-    String mandDate = StringUtils.trimToNull(prop.getProperty(ISEPAParser.Names.MANDDATEOFSIG.getValue()));
+    String mandDate = StringUtil.trimToNull(prop.getProperty(ISEPAParser.Names.MANDDATEOFSIG.getValue()));
     if (mandDate != null && !SepaUtil.DATE_UNDEFINED.equals(mandDate))
       u.setSignatureDate(ISO_DATE.parse(mandDate));
 

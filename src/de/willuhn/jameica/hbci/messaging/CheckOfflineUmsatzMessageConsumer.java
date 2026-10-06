@@ -10,14 +10,13 @@
 
 package de.willuhn.jameica.hbci.messaging;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.datasource.GenericObject;
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.SynchronizeOptions;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.KontoUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.Message;
 import de.willuhn.jameica.messaging.MessageConsumer;
 import de.willuhn.jameica.system.Application;
@@ -82,7 +81,7 @@ public class CheckOfflineUmsatzMessageConsumer implements MessageConsumer
 
     // Checken, ob wir ein lokal passendes Offline-Konto haben
     Konto gegenkonto = null;
-    String s = StringUtils.trimToNull(u.getGegenkontoNummer());
+    String s = StringUtil.trimToNull(u.getGegenkontoNummer());
     if (s == null)
     {
       Logger.debug("skip, have no account number for counter entry");

@@ -12,8 +12,6 @@ package de.willuhn.jameica.hbci.util;
 
 import java.util.Optional;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.speedbanking.bankdata.BankData;
 import de.speedbanking.bankdata.BankDataLookup;
 
@@ -43,7 +41,7 @@ public class BankNameResolver
    */
   public final static String getNameForBank(String bic)
   {
-    bic = StringUtils.trimToNull(bic);
+    bic = StringUtil.trimToNull(bic);
     if (bic == null)
       return null;
 
@@ -60,7 +58,7 @@ public class BankNameResolver
     // Normalerweise nicht nötig. Es gibt aber einige Banken, die z.Bsp. folgenden
     // Namen haben: "Landesbank Baden-Württemberg/Baden-Württembergische Bank"
     // Das verzerrt sonst die Layouts an einigen Stellen
-    return StringUtils.abbreviateMiddle(bankData.get().getBankName(),"...",MAX_NAME_LENGTH);
+    return StringUtil.abbreviateMiddle(bankData.get().getBankName(),"...",MAX_NAME_LENGTH);
   }
 
   // disabled

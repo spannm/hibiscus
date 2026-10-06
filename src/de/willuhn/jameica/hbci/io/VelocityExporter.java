@@ -22,13 +22,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import de.willuhn.io.FileFinder;
 import de.willuhn.jameica.hbci.HBCI;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.services.VelocityService;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.Settings;
@@ -254,7 +254,7 @@ public class VelocityExporter implements Exporter
      */
     public DateFormat getFormat(String format)
     {
-      format = StringUtils.trimToNull(format);
+      format = StringUtil.trimToNull(format);
       if (format == null)
       {
         Logger.warn("no date format given, fallback to default format");
@@ -285,7 +285,7 @@ public class VelocityExporter implements Exporter
      */
     public String escape(String s)
     {
-      if (StringUtils.isEmpty(s))
+      if (StringUtil.isEmpty(s))
         return s;
 
       // Double-Quote mit Double-Quote escapen

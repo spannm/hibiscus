@@ -20,8 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.datasource.GenericIterator;
 import de.willuhn.datasource.GenericObjectNode;
 import de.willuhn.datasource.db.AbstractDBObjectNode;
@@ -34,6 +32,7 @@ import de.willuhn.jameica.hbci.rmi.Duplicatable;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.rmi.UmsatzTyp;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.Settings;
@@ -295,17 +294,17 @@ public class UmsatzTypImpl extends AbstractDBObjectNode implements UmsatzTyp, Du
       return false;
 
     String zweck = VerwendungszweckUtil.toString(umsatz,"");
-    String name  = StringUtils.trimToEmpty(umsatz.getGegenkontoName());
-    String name2 = StringUtils.trimToEmpty(umsatz.getGegenkontoName2());
-    String kto   = StringUtils.trimToEmpty(umsatz.getGegenkontoNummer());
-    String kom   = StringUtils.trimToEmpty(umsatz.getKommentar());
-    String art   = StringUtils.trimToEmpty(umsatz.getArt());
-    String purp  = StringUtils.trimToEmpty(umsatz.getPurposeCode());
-    String ref   = StringUtils.trimToEmpty(umsatz.getCustomerRef());
-    String e2eid = StringUtils.trimToEmpty(umsatz.getEndToEndId());
-    String mid   = StringUtils.trimToEmpty(umsatz.getMandateId());
-    String cid   = StringUtils.trimToEmpty(umsatz.getCreditorId());
-    String id    = StringUtils.trimToEmpty(umsatz.getID());
+    String name  = StringUtil.trimToEmpty(umsatz.getGegenkontoName());
+    String name2 = StringUtil.trimToEmpty(umsatz.getGegenkontoName2());
+    String kto   = StringUtil.trimToEmpty(umsatz.getGegenkontoNummer());
+    String kom   = StringUtil.trimToEmpty(umsatz.getKommentar());
+    String art   = StringUtil.trimToEmpty(umsatz.getArt());
+    String purp  = StringUtil.trimToEmpty(umsatz.getPurposeCode());
+    String ref   = StringUtil.trimToEmpty(umsatz.getCustomerRef());
+    String e2eid = StringUtil.trimToEmpty(umsatz.getEndToEndId());
+    String mid   = StringUtil.trimToEmpty(umsatz.getMandateId());
+    String cid   = StringUtil.trimToEmpty(umsatz.getCreditorId());
+    String id    = StringUtil.trimToEmpty(umsatz.getID());
     
     // Im Suchbegriff können wir nicht nach Betrag suchen, da wir das Komma "," bereits als Trennzeichen
     // für mehrere Suchbegriffe verwenden. Es wäre also nicht möglich, nach "50,00" zu suchen, weil dann
@@ -327,9 +326,9 @@ public class UmsatzTypImpl extends AbstractDBObjectNode implements UmsatzTyp, Du
 
       if (ignorewhitespace)
       {
-        zweck = StringUtils.deleteWhitespace(zweck);
-        name = StringUtils.deleteWhitespace(name); // BUGZILLA 1705 - auch im Namen koennen Leerzeichen sein
-        name2 = StringUtils.deleteWhitespace(name2);
+        zweck = StringUtil.deleteWhitespace(zweck);
+        name = StringUtil.deleteWhitespace(name); // BUGZILLA 1705 - auch im Namen koennen Leerzeichen sein
+        name2 = StringUtil.deleteWhitespace(name2);
       }
 
       String[] list = UmsatzTypUtil.splitQuery(s.toLowerCase(), ","); // Wir beachten Gross-Kleinschreibung grundsaetzlich nicht
@@ -338,7 +337,7 @@ public class UmsatzTypImpl extends AbstractDBObjectNode implements UmsatzTyp, Du
       {
         String test = list[i].trim();
         if (ignorewhitespace) {
-          test = StringUtils.deleteWhitespace(test);
+          test = StringUtil.deleteWhitespace(test);
 
           /*
            * While we already removed empty elements in split_escape(), this
@@ -889,6 +888,6 @@ public class UmsatzTypImpl extends AbstractDBObjectNode implements UmsatzTyp, Du
       sep = "|";
     
     Collections.reverse(names);
-    return StringUtils.join(names,sep);
+    return String.join(sep,names);
   }
 }

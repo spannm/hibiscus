@@ -11,8 +11,6 @@ package de.willuhn.jameica.hbci.gui.menus;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.gui.Action;
 import de.willuhn.jameica.gui.extension.Extendable;
 import de.willuhn.jameica.gui.extension.ExtensionRegistry;
@@ -40,6 +38,7 @@ import de.willuhn.jameica.hbci.gui.action.UmsatzDetailEdit;
 import de.willuhn.jameica.hbci.gui.action.UmsatzImport;
 import de.willuhn.jameica.hbci.rmi.Flaggable;
 import de.willuhn.jameica.hbci.rmi.Konto;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -298,7 +297,7 @@ public class KontoList extends ContextMenu implements Extendable
       try
       {
         final Konto k = (Konto) o;
-        final String iban = StringUtils.deleteWhitespace(k.getIban());
+        final String iban = StringUtil.deleteWhitespace(k.getIban());
         return iban != null && iban.length() > 0;
       }
       catch (RemoteException re)

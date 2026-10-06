@@ -15,8 +15,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.speedbanking.bankdata.BankData;
 import de.speedbanking.bankdata.BankDataLookup;
 import de.willuhn.datasource.GenericObject;
@@ -28,6 +26,7 @@ import de.willuhn.jameica.hbci.rmi.Address;
 import de.willuhn.jameica.hbci.rmi.Addressbook;
 import de.willuhn.jameica.hbci.rmi.HibiscusAddress;
 import de.willuhn.jameica.hbci.rmi.Konto;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -147,9 +146,9 @@ public class AddressbookHibiscusImpl extends UnicastRemoteObject implements Addr
    */
   private GenericObject contains(DBIterator it, Address a) throws RemoteException
   {
-    String kto  = StringUtils.trimToNull(a.getKontonummer());
-    String iban = StringUtils.trimToNull(a.getIban());
-    String name = StringUtils.trimToNull(a.getName());
+    String kto  = StringUtil.trimToNull(a.getKontonummer());
+    String iban = StringUtil.trimToNull(a.getIban());
+    String name = StringUtil.trimToNull(a.getName());
     
     if (iban != null)
     {
@@ -178,8 +177,8 @@ public class AddressbookHibiscusImpl extends UnicastRemoteObject implements Addr
     
     try
     {
-      String blz   = StringUtils.trimToNull(address.getBlz());
-      String konto = StringUtils.trimToNull(address.getKontonummer());
+      String blz   = StringUtil.trimToNull(address.getBlz());
+      String konto = StringUtil.trimToNull(address.getKontonummer());
       
       if (blz == null || konto == null)
         return;
@@ -188,7 +187,7 @@ public class AddressbookHibiscusImpl extends UnicastRemoteObject implements Addr
       
       String bic = null;
       
-      if (HBCI.COMPLETE_IBAN && StringUtils.trimToNull(address.getIban()) == null)
+      if (HBCI.COMPLETE_IBAN && StringUtil.isBlank(address.getIban()))
       {
         IbanCommonsProperties.IbanAndBic iban = IbanCommonsProperties.getIBAN(blz,konto);
         bic = iban.getBic();
@@ -196,11 +195,11 @@ public class AddressbookHibiscusImpl extends UnicastRemoteObject implements Addr
         haveChanged = true;
       }
 
-      if (StringUtils.trimToNull(address.getBic()) == null)
+      if (StringUtil.isBlank(address.getBic()))
       {
         if (bic == null) // nur wenn sie nicht schon ermittelt wurde
           bic = BankDataLookup.byBankCode("DE",blz).map(BankData::getBic).map(Object::toString).orElse(null);
-        if (StringUtils.trimToNull(bic) != null)
+        if (StringUtil.isNotBlank(bic))
         {
           address.setBic(bic);
           haveChanged = true;

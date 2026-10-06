@@ -12,7 +12,6 @@ package de.willuhn.jameica.hbci.server.hbci;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.GV_Result.AbstractGVRLastSEPA;
 
 import de.willuhn.datasource.rmi.ObjectNotFoundException;
@@ -30,6 +29,7 @@ import de.willuhn.jameica.hbci.rmi.SepaLastType;
 import de.willuhn.jameica.hbci.rmi.SepaLastschrift;
 import de.willuhn.jameica.hbci.server.Converter;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -181,13 +181,13 @@ public class HBCISepaLastschriftJob extends AbstractHBCIJob
     lastschrift.setAusgefuehrt(true);
     
     // Wenn wir eine zugeordnete Adresse haben, koennen wir den Sequenz-Type umsetzen
-    String id = StringUtils.trimToNull(MetaKey.ADDRESS_ID.get(lastschrift));
+    String id = StringUtil.trimToNull(MetaKey.ADDRESS_ID.get(lastschrift));
     if (id != null)
     {
       try
       {
         HibiscusAddress ha = (HibiscusAddress) Settings.getDBService().createObject(HibiscusAddress.class,id);
-        String seqCode = StringUtils.trimToNull(MetaKey.SEPA_SEQUENCE_CODE.get(ha));
+        String seqCode = StringUtil.trimToNull(MetaKey.SEPA_SEQUENCE_CODE.get(ha));
         if (seqCode != null)
         {
           SepaLastSequenceType type = SepaLastSequenceType.valueOf(seqCode);

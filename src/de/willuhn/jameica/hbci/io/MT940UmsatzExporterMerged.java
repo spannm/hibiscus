@@ -18,14 +18,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.datasource.BeanUtil;
 import de.willuhn.io.IOUtil;
 import de.willuhn.jameica.hbci.gui.ext.ExportSaldoExtension;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
 import de.willuhn.util.ProgressMonitor;
@@ -114,17 +113,17 @@ public class MT940UmsatzExporterMerged extends MT940UmsatzExporter
         out.write(betrag >= 0.0d ? "CR" : "DR");
         out.write(DECF.format(betrag).replace("-",""));
     		
-        String ref = StringUtils.trimToNull(u.getCustomerRef());
+        String ref = StringUtil.trimToNull(u.getCustomerRef());
     		out.write("NTRF" + (ref != null ? ref : "NONREF") + NL);
 
     		String gvcode = u.getGvCode();
     		
       	// Fallback, wenn wir keinen GV-Code haben. Das trifft u.a. bei Alt-Umsaetzen
     		// auf, als Hibiscus das Feld noch nicht unterstuetzte.
-    		if (StringUtils.trimToNull(gvcode) == null)
+    		if (StringUtil.isBlank(gvcode))
       		gvcode = betrag >= 0.0d? "051" : "020";
     		
-    		out.write(":86:" + gvcode + "?00" + StringUtils.trimToEmpty(u.getArt()) + "?10" + StringUtils.trimToEmpty(u.getPrimanota()));
+    		out.write(":86:" + gvcode + "?00" + StringUtil.trimToEmpty(u.getArt()) + "?10" + StringUtil.trimToEmpty(u.getPrimanota()));
 
         int m = 0;
 
@@ -163,10 +162,10 @@ public class MT940UmsatzExporterMerged extends MT940UmsatzExporter
         m = addRef(out,m,VerwendungszweckUtil.Tag.MREF,u.getMandateId());
         m = addRef(out,m,VerwendungszweckUtil.Tag.CRED,u.getCreditorId());
         
-        String blz = StringUtils.trimToNull(u.getGegenkontoBLZ());
-        String kto = StringUtils.trimToNull(u.getGegenkontoNummer());
-        String nam = StringUtils.trimToNull(u.getGegenkontoName());
-        String add = StringUtils.trimToNull(u.getAddKey());
+        String blz = StringUtil.trimToNull(u.getGegenkontoBLZ());
+        String kto = StringUtil.trimToNull(u.getGegenkontoNummer());
+        String nam = StringUtil.trimToNull(u.getGegenkontoName());
+        String add = StringUtil.trimToNull(u.getAddKey());
         if (blz != null) out.write("?30" + blz);
         if (kto != null) out.write("?31" + kto);
         if (nam != null) out.write("?32" + nam);

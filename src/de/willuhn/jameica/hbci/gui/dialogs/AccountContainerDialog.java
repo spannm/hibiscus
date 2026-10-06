@@ -9,7 +9,6 @@
  **********************************************************************/
 package de.willuhn.jameica.hbci.gui.dialogs;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -33,6 +32,7 @@ import de.willuhn.jameica.hbci.AccountContainer;
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.HBCIProperties;
 import de.willuhn.jameica.hbci.gui.input.BLZInput;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
 import de.willuhn.logging.Logger;
@@ -323,7 +323,7 @@ public class AccountContainerDialog extends AbstractDialog
 	 */
 	private String cleanUrl(String url)
 	{
-	  url = StringUtils.trimToEmpty(url); // BUGZILLA 381
+	  url = StringUtil.trimToEmpty(url); // BUGZILLA 381
 	  if (url.length() == 0)
 	    return url;
 	  
@@ -333,7 +333,7 @@ public class AccountContainerDialog extends AbstractDialog
     url = url.replaceFirst(":[0-9]{1,5}/","/"); // BUGZILLA 1159
     
     // Entfernt Leerzeichen in der URL - siehe https://homebanking-hilfe.de/forum/topic.php?p=171637#real171637
-    url = StringUtils.deleteWhitespace(url);
+    url = StringUtil.deleteWhitespace(url);
     return url;
 	}
 }

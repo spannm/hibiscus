@@ -16,7 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -76,6 +75,7 @@ import de.willuhn.jameica.hbci.server.Range;
 import de.willuhn.jameica.hbci.server.Range.Category;
 import de.willuhn.jameica.hbci.server.UmsatzTypUtil;
 import de.willuhn.jameica.hbci.server.UmsatzUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.OperationCanceledException;
@@ -652,7 +652,7 @@ public class KontoauszugList extends UmsatzList
       if (syssettings.getBoolean("search.ignore.whitespace",true))
       {
         q = "REPLACE(REPLACE(REPLACE(" + q + ",' ',''),'\n',''),'\r','')";
-        zkStripped = StringUtils.deleteWhitespace(zk);
+        zkStripped = StringUtil.deleteWhitespace(zk);
       }
       umsaetze.addFilter("(LOWER(" + q + ") LIKE ? OR LOWER(kommentar) like ? OR LOWER(art) like ?)",zkStripped,zk,zk);
     }
@@ -1092,7 +1092,7 @@ public class KontoauszugList extends UmsatzList
      */
     public Object getValue()
     {
-      return text != null && !text.isDisposed() ? StringUtils.trimToNull(text.getText()) : null;
+      return text != null && !text.isDisposed() ? StringUtil.trimToNull(text.getText()) : null;
     }
 
     /**

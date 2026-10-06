@@ -18,8 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.gui.filter.KontoFilter;
 import de.willuhn.jameica.hbci.messaging.SaldoLimitsMessage;
@@ -29,6 +27,7 @@ import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.server.KontoUtil;
 import de.willuhn.jameica.hbci.server.Value;
 import de.willuhn.jameica.hbci.util.SaldoFinder;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.services.BeanService;
 import de.willuhn.jameica.system.Application;
@@ -111,8 +110,8 @@ public class ForecastCreator
     {
       final String prefix = "limit." + type.name().toLowerCase();
       
-      final String saldo    = StringUtils.trimToNull(k.getMeta(prefix + ".saldo",null));
-      final String days     = StringUtils.trimToNull(k.getMeta(prefix + ".days",null));
+      final String saldo    = StringUtil.trimToNull(k.getMeta(prefix + ".saldo",null));
+      final String days     = StringUtil.trimToNull(k.getMeta(prefix + ".days",null));
       final boolean enabled = Boolean.valueOf(k.getMeta(prefix + ".enabled","false"));
       final boolean notify  = Boolean.valueOf(k.getMeta(prefix + ".notify","false"));
       

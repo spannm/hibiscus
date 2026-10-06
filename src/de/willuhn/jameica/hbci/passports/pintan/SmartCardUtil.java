@@ -10,6 +10,8 @@
 
 package de.willuhn.jameica.hbci.passports.pintan;
 
+import de.willuhn.jameica.hbci.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,6 @@ import javax.smartcardio.CardTerminal;
 import javax.smartcardio.CardTerminals;
 import javax.smartcardio.TerminalFactory;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.smartcardio.ChipTanCardService;
 import org.kapott.hbci.smartcardio.SmartCardService;
 
@@ -50,7 +51,7 @@ public class SmartCardUtil
       {
         for (CardTerminal t:list)
         {
-          String name = StringUtils.trimToNull(t.getName());
+          String name = StringUtil.trimToNull(t.getName());
           if (name != null)
             available.add(name);
         }
@@ -78,7 +79,7 @@ public class SmartCardUtil
    */
   public static ChipTanCardService getService(String name)
   {
-    name = StringUtils.trimToNull(name);
+    name = StringUtil.trimToNull(name);
     
     // Kein Name angegeben.
     if (name == null)

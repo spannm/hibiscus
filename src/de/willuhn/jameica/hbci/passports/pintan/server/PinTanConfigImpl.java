@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.manager.HBCIVersion;
 import org.kapott.hbci.passport.HBCIPassport;
 
@@ -29,6 +28,7 @@ import de.willuhn.jameica.hbci.passports.pintan.PinTanConfigFactory;
 import de.willuhn.jameica.hbci.passports.pintan.PtSecMech;
 import de.willuhn.jameica.hbci.passports.pintan.rmi.PinTanConfig;
 import de.willuhn.jameica.hbci.rmi.Konto;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Settings;
 import de.willuhn.logging.Level;
 import de.willuhn.logging.Logger;
@@ -203,7 +203,7 @@ public class PinTanConfigImpl implements PinTanConfig
    */
   public String getHBCIVersion() throws RemoteException
   {
-    String ppVersion = StringUtils.trimToNull(this.getPassport().getHBCIVersion());
+    String ppVersion = StringUtil.trimToNull(this.getPassport().getHBCIVersion());
     return settings.getString(getID() + ".hbciversion",ppVersion != null ? ppVersion : HBCIVersion.HBCI_300.getId());
   }
 
@@ -495,7 +495,7 @@ public class PinTanConfigImpl implements PinTanConfig
   @Override
   public Boolean isChipTANUSB() throws RemoteException
   {
-    String s = StringUtils.trimToNull(settings.getString(getID() + ".chiptan.usb.enabled",null));
+    String s = StringUtil.trimToNull(settings.getString(getID() + ".chiptan.usb.enabled",null));
     return s != null ? Boolean.valueOf(s) : null;
   }
   

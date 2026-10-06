@@ -15,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -36,6 +35,7 @@ import de.willuhn.jameica.gui.util.SimpleContainer;
 import de.willuhn.jameica.hbci.HBCI;
 import de.willuhn.jameica.hbci.rmi.Kontoauszug;
 import de.willuhn.jameica.hbci.server.KontoauszugPdfUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.QueryMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.BackgroundTask;
@@ -143,7 +143,7 @@ public class KontoauszugMoveDialog extends AbstractDialog<Kontoauszug>
    */
   private void check()
   {
-    final String s = StringUtils.trimToNull((String) getTarget().getValue());
+    final String s = StringUtil.trimToNull((String) getTarget().getValue());
     
     String text = null;
     boolean enable = false;
@@ -384,7 +384,7 @@ public class KontoauszugMoveDialog extends AbstractDialog<Kontoauszug>
             // Quelldatei loeschen
             if (delete && source != null && !same)
             {
-              String uuid = StringUtils.trimToNull(k.getUUID());
+              String uuid = StringUtil.trimToNull(k.getUUID());
               if (uuid != null)
               {
                 // Datei auf dem Archive-Server loeschen

@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
@@ -41,6 +40,7 @@ import de.willuhn.jameica.hbci.gui.input.KontoInput;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.synchronize.hbci.HBCITraceMessage;
 import de.willuhn.jameica.hbci.synchronize.hbci.HBCITraceMessageConsumer;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.services.BeanService;
 import de.willuhn.jameica.system.Application;
@@ -171,7 +171,7 @@ public class HBCITraceDialog extends AbstractDialog
     try
     {
       String file = (String) getFile().getValue();
-      if (StringUtils.isEmpty(file))
+      if (StringUtil.isEmpty(file))
         throw new ApplicationException(i18n.tr("Bitte wählen Sie eine Datei aus."));
       
       File f = new File(file);

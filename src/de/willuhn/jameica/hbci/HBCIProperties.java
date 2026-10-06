@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.manager.BankInfo;
 import org.kapott.hbci.manager.HBCIUtils;
 import org.kapott.hbci.passport.HBCIPassport;
@@ -23,6 +22,7 @@ import de.willuhn.datasource.rmi.DBService;
 import de.willuhn.jameica.hbci.rmi.AddressbookService;
 import de.willuhn.jameica.hbci.rmi.HibiscusAddress;
 import de.willuhn.jameica.hbci.util.BankNameResolver;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.jameica.system.Settings;
 import de.willuhn.jameica.util.DateUtil;
@@ -281,7 +281,7 @@ public class HBCIProperties
     if (text == null || text.length() == 0)
       return text;
     
-    return StringUtils.replaceEach(text,replacements[0],replacements[1]);
+    return StringUtil.replaceEach(text,replacements[0],replacements[1]);
   }
   
   /**

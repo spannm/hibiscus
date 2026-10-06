@@ -9,7 +9,6 @@
  **********************************************************************/
 package de.willuhn.jameica.hbci;
 
-import org.apache.commons.lang.StringUtils;
 import org.kapott.hbci.manager.BankInfo;
 import org.kapott.hbci.manager.HBCIUtils;
 
@@ -24,6 +23,7 @@ import de.speedbanking.iban.InvalidIbanException;
 import de.willuhn.datasource.rmi.DBService;
 import de.willuhn.jameica.hbci.rmi.AddressbookService;
 import de.willuhn.jameica.hbci.rmi.HibiscusAddress;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
 import de.willuhn.util.ApplicationException;
@@ -102,10 +102,10 @@ public class IbanCommonsProperties
    */
   public final static void checkIBAN(String iban) throws ApplicationException
   {
-    if (StringUtils.trimToNull(iban) == null)
+    if (StringUtil.isBlank(iban))
       throw new ApplicationException(i18n.tr("Bitte geben Sie eine IBAN ein"));
 
-    iban = StringUtils.deleteWhitespace(iban);
+    iban = StringUtil.deleteWhitespace(iban);
 
     if (iban == null || iban.length() == 0)
       throw new ApplicationException(i18n.tr("Bitte geben Sie eine IBAN ein"));
@@ -159,10 +159,10 @@ public class IbanCommonsProperties
    */
   public final static Iban getIBAN(String iban) throws ApplicationException
   {
-    if (StringUtils.trimToNull(iban) == null)
+    if (StringUtil.isBlank(iban))
       return null;
 
-    iban = StringUtils.deleteWhitespace(iban);
+    iban = StringUtil.deleteWhitespace(iban);
 
     if (iban == null || iban.length() == 0)
       return null;
@@ -227,7 +227,7 @@ public class IbanCommonsProperties
   private static boolean checkGermanNationalCheckDigit(String blz, String konto, String iban) throws ApplicationException
   {
     BankInfo info = HBCIUtils.getBankInfo(blz);
-    String method = info != null ? StringUtils.trimToNull(info.getChecksumMethod()) : null;
+    String method = info != null ? StringUtil.trimToNull(info.getChecksumMethod()) : null;
 
     if (method == null)
       return false; // Verfahren unbekannt - wie bisher IBANCode.PRUEFZIFFERNMETHODEFEHLT tolerieren

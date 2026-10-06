@@ -12,7 +12,6 @@ package de.willuhn.jameica.hbci.gui.controller;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -43,6 +42,7 @@ import de.willuhn.jameica.hbci.rmi.Umsatz;
 import de.willuhn.jameica.hbci.rmi.UmsatzTyp;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil;
 import de.willuhn.jameica.hbci.server.VerwendungszweckUtil.Tag;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
@@ -235,7 +235,7 @@ public class UmsatzDetailControl extends AbstractControl
     
     String s = getUmsatz().getGegenkontoNummer();
     
-    if (StringUtils.trimToEmpty(s).length() > 10)
+    if (StringUtil.trimToEmpty(s).length() > 10)
     {
       this.empfaengerKonto = new IBANInput(s,null);
       this.empfaengerKonto.setName(i18n.tr("IBAN"));
@@ -396,7 +396,7 @@ public class UmsatzDetailControl extends AbstractControl
   {
     if (this.endToEndId == null)
     {
-      String eref = StringUtils.trimToNull(getUmsatz().getEndToEndId());
+      String eref = StringUtil.trimToNull(getUmsatz().getEndToEndId());
       
       // Fuer die Abwaertskompatibilitaet
       if (eref == null)
@@ -420,7 +420,7 @@ public class UmsatzDetailControl extends AbstractControl
  {
    if (this.mandateId == null)
    {
-     String mref = StringUtils.trimToNull(getUmsatz().getMandateId());
+     String mref = StringUtil.trimToNull(getUmsatz().getMandateId());
      
      // Fuer die Abwaertskompatibilitaet
      if (mref == null)
@@ -442,7 +442,7 @@ public class UmsatzDetailControl extends AbstractControl
   {
     if (this.creditorId == null)
     {
-      String credId = StringUtils.trimToNull(getUmsatz().getCreditorId());
+      String credId = StringUtil.trimToNull(getUmsatz().getCreditorId());
       
       // Fuer die Abwaertskompatibilitaet
       if (credId == null)

@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Control;
@@ -35,6 +34,7 @@ import de.willuhn.jameica.hbci.gui.filter.KontoFilter;
 import de.willuhn.jameica.hbci.messaging.SaldoMessage;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.server.KontoUtil;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.Message;
 import de.willuhn.jameica.messaging.MessageConsumer;
 import de.willuhn.jameica.system.Application;
@@ -254,7 +254,7 @@ public class KontoInput extends SelectInput
       {
         if (haveGroups)
         {
-          String kat = StringUtils.trimToNull(k.getKategorie());
+          String kat = StringUtil.trimToNull(k.getKategorie());
           if (kat != null) // haben wir eine Kategorie?
           {
             if (current == null || !kat.equals(current)) // Neue Kategorie?

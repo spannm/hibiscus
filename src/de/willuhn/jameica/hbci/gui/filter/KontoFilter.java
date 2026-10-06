@@ -12,14 +12,13 @@ package de.willuhn.jameica.hbci.gui.filter;
 
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
-
 import de.willuhn.jameica.hbci.HBCIProperties;
 import de.willuhn.jameica.hbci.rmi.Konto;
 import de.willuhn.jameica.hbci.synchronize.SynchronizeBackend;
 import de.willuhn.jameica.hbci.synchronize.SynchronizeEngine;
 import de.willuhn.jameica.hbci.synchronize.jobs.SynchronizeJob;
 import de.willuhn.jameica.hbci.synchronize.jobs.SynchronizeJobKontoauszug;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.services.BeanService;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.logging.Logger;
@@ -189,20 +188,20 @@ public abstract class KontoFilter implements Filter<Konto>
         if (accountType != null && (konto.getAccountType() == null || !konto.getAccountType().equals(accountType)))
           return false;
 
-        String s = StringUtils.trimToNull(text);
+        String s = StringUtil.trimToNull(text);
         if (s == null)
           return true;
         s = s.toLowerCase();
         
-        String s1 = StringUtils.trimToEmpty(konto.getBezeichnung()).toLowerCase();
-        String s2 = StringUtils.trimToEmpty(konto.getBic()).toLowerCase();
-        String s3 = StringUtils.trimToEmpty(konto.getBLZ()).toLowerCase();
-        String s4 = StringUtils.trimToEmpty(konto.getIban()).toLowerCase();
-        String s5 = StringUtils.trimToEmpty(konto.getKategorie()).toLowerCase();
-        String s6 = StringUtils.trimToEmpty(konto.getKommentar()).toLowerCase();
-        String s7 = StringUtils.trimToEmpty(konto.getKontonummer()).toLowerCase();
-        String s8 = StringUtils.trimToEmpty(konto.getKundennummer()).toLowerCase();
-        String s9 = StringUtils.trimToEmpty(konto.getName()).toLowerCase();
+        String s1 = StringUtil.trimToEmpty(konto.getBezeichnung()).toLowerCase();
+        String s2 = StringUtil.trimToEmpty(konto.getBic()).toLowerCase();
+        String s3 = StringUtil.trimToEmpty(konto.getBLZ()).toLowerCase();
+        String s4 = StringUtil.trimToEmpty(konto.getIban()).toLowerCase();
+        String s5 = StringUtil.trimToEmpty(konto.getKategorie()).toLowerCase();
+        String s6 = StringUtil.trimToEmpty(konto.getKommentar()).toLowerCase();
+        String s7 = StringUtil.trimToEmpty(konto.getKontonummer()).toLowerCase();
+        String s8 = StringUtil.trimToEmpty(konto.getKundennummer()).toLowerCase();
+        String s9 = StringUtil.trimToEmpty(konto.getName()).toLowerCase();
         
         return s1.contains(s) ||
                s2.contains(s) ||

@@ -12,7 +12,6 @@ package de.willuhn.jameica.hbci.accounts.hbci.controller;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.kapott.hbci.manager.BankInfo;
@@ -30,6 +29,7 @@ import de.willuhn.jameica.hbci.accounts.hbci.HBCIAccountPinTan;
 import de.willuhn.jameica.hbci.accounts.hbci.action.HBCIVariantPinTanTest;
 import de.willuhn.jameica.hbci.accounts.hbci.views.HBCIVariantPinTanStep2;
 import de.willuhn.jameica.hbci.gui.input.BankInfoInput;
+import de.willuhn.jameica.hbci.util.StringUtil;
 import de.willuhn.jameica.messaging.StatusBarMessage;
 import de.willuhn.jameica.system.Application;
 import de.willuhn.util.ApplicationException;
@@ -288,7 +288,7 @@ public class HBCIVariantPinTanController extends AbstractControl
      */
     private String cleanUrl(String url)
     {
-      url = StringUtils.trimToEmpty(url);
+      url = StringUtil.trimToEmpty(url);
       if (url.length() == 0)
         return url;
       
